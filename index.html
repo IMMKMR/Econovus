@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Econovus — Website Analysis & Strategy Report | by Covana</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    /* Brand Colors (Updated to Covana Style) */
+    --eco-green: #f5a623;
+    --eco-green-light: #ffba4d;
+    --eco-navy: #1c2a43;
+    --eco-dark: #121c2d;
+    /* Covana Brand Colors */
+    --covana-orange: #f5a623;
+    --covana-dark: #3a3a3a;
+    /* Utility */
+    --white: #ffffff;
+    --light-bg: #f7f8fa;
+    --gray-100: #f1f3f5;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-500: #adb5bd;
+    --gray-600: #6c757d;
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    --gray-900: #212529;
+    --red: #e63946;
+    --amber: #f59e0b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    color: var(--gray-900);
+    line-height: 1.7;
+    background: var(--white);
+    font-size: 16px;
+  }
+
+  /* ═══════ COVER PAGE ═══════ */
+  .cover-page {
+    min-height: 100vh;
+    background: var(--light-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 50px;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-page::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(14, 121, 61, 0.12) 0%, transparent 70%);
+    z-index: 0;
+  }
+  .cover-page::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(245, 166, 35, 0.08) 0%, transparent 70%);
+    z-index: 0;
+  }
+  .cover-page * { position: relative; z-index: 1; }
+
+  .cover-logo-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 50px;
+  }
+  .cover-logo-row .by-text {
+    color: rgba(255,255,255,0.4);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1px;
+  }
+  .cover-logo-row .covana-text {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--covana-orange), #e8941a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+  }
+
+  .cover-badge {
+    display: inline-block;
+    background: rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 50px;
+    padding: 8px 28px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--covana-orange);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .cover-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--eco-green), var(--eco-green-light));
+    border-radius: 3px;
+    margin-bottom: 30px;
+  }
+  .cover-title { color: var(--eco-navy);   font-size: 46px; letter-spacing: -0.5px;
+    font-weight: 800;
+    
+    line-height: 1.12;
+    margin-bottom: 18px;
+   }
+  .cover-title .highlight {
+    background: linear-gradient(135deg, var(--covana-orange), #d97706);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .cover-subtitle {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--gray-700);
+    max-width: 580px;
+    margin: 0 auto 50px;
+    line-height: 1.7;
+  }
+  .cover-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 50px;
+    max-width: 600px;
+    width: 100%;
+  }
+  .cover-meta-item {
+    text-align: center;
+  }
+  .cover-meta-item .label {
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .cover-meta-item .value {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+  }
+  .cover-footer { color: var(--gray-600); 
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    
+   }
+
+  /* ═══════ TOC ═══════ */
+  .toc-page {
+    padding: 70px 60px;
+    page-break-after: always;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .toc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 40px;
+    border-bottom: 2px solid var(--eco-navy);
+    padding-bottom: 16px;
+  }
+  .toc-header h2 {
+    
+    font-size: 32px;
+    color: var(--eco-navy);
+  }
+  .toc-header .covana-mark {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--covana-orange);
+  }
+  .toc-list { list-style: none; }
+  .toc-list li {
+    display: flex;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 15px;
+    gap: 16px;
+  }
+  .toc-num {
+    font-weight: 800;
+    color: var(--eco-green);
+    font-size: 16px;
+    min-width: 28px;
+  }
+  .toc-title { font-weight: 500; color: var(--gray-800); flex-grow: 1; }
+
+  /* ═══════ SECTION PAGES ═══════ */
+  .section-page {
+    padding: 50px 60px;
+    max-width: 1500px;
+    margin: 0 auto;
+    page-break-after: always;
+  }
+  .section-header {
+    margin-bottom: 28px;
+  }
+  .section-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--eco-green);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .section-page h2 {
+    
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--eco-navy);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .section-divider {
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--eco-green), var(--eco-green-light));
+    border-radius: 3px;
+    margin-bottom: 24px;
+  }
+  .section-page h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--eco-navy);
+    margin: 28px 0 10px 0;
+  }
+  .section-page h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin: 18px 0 6px 0;
+  }
+  .section-page p {
+    font-size: 16px;
+    color: var(--gray-700);
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+  .section-page ul {
+    margin: 0 0 14px 18px;
+    font-size: 16px;
+    color: var(--gray-700);
+  }
+  .section-page ul li { margin-bottom: 6px; line-height: 1.7; }
+  .section-page ul li strong { color: var(--gray-900); }
+  .section-filled-dark ul li strong { color: var(--white); }
+
+  
+  /* ═══════ FILLED SECTIONS (Covana Style) ═══════ */
+  .section-filled-light {
+    background-color: #f8fafc;
+  }
+  .section-filled-dark {
+    background-color: var(--eco-navy);
+    color: var(--white);
+  }
+  .section-filled-dark h2, .section-filled-dark h3, .section-filled-dark h4 {
+    color: var(--white);
+  }
+  .section-filled-dark p, .section-filled-dark ul, .section-filled-dark li {
+    color: rgba(255,255,255,0.85);
+  }
+  .section-filled-dark .section-divider {
+    background: linear-gradient(90deg, var(--covana-orange), #ffba4d);
+  }
+  .section-filled-dark .tech-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .section-filled-dark .tech-card .tech-name {
+    color: var(--white);
+  }
+  .section-filled-dark .tech-card .tech-desc {
+    color: rgba(255,255,255,0.7);
+  }
+  .section-filled-dark .tech-card .tech-layer {
+    color: var(--covana-orange);
+  }
+  .section-filled-dark .metrics-table th {
+    background: rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .section-filled-dark .metrics-table td {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: var(--white);
+  }
+  .section-filled-dark .metrics-table tbody tr:nth-child(even) {
+    background: rgba(255,255,255,0.02);
+  }
+  
+  .side-by-side {
+    display: grid;
+    grid-template-columns: 35% 65%;
+    gap: 30px;
+    align-items: start;
+    margin: 24px 0;
+  }
+  .side-by-side > .screenshot-container {
+    margin: 0;
+  }
+  .side-by-side > .data-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .side-by-side .score-grid {
+    margin: 0;
+  }
+  .side-by-side .metrics-table {
+    margin: 0;
+  }
+  .side-by-side .issue-card, .side-by-side .warning-box {
+    margin: 0;
+  }
+  /* ═══════ SCREENSHOT CONTAINERS ═══════ */
+  .screenshot-container {
+    margin: 24px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .screenshot-container img {
+    width: 100%;
+    display: block;
+  }
+  .screenshot-label {
+    background: var(--gray-100);
+    padding: 10px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-600);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot-red { background: var(--red); }
+  .dot-green { background: var(--eco-green); }
+  .dot-amber { background: var(--amber); }
+  .dot-navy { background: var(--eco-navy); }
+
+  /* ═══════ COMPARISON GRID ═══════ */
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 24px 0;
+  }
+  .comparison-card {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .comparison-card img { width: 100%; display: block; }
+  .comparison-card .card-label {
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .label-current { background: #fff0f0; color: var(--red); }
+  .label-benchmark { background: #e8faf0; color: var(--eco-green); }
+
+  /* ═══════ ISSUE CARDS ═══════ */
+  .issue-card {
+    background: #fff;
+    border-left: 3px solid var(--red);
+    border-radius: 8px; border: 1px solid var(--gray-200); border-left: 3px solid var(--red); box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    padding: 18px 24px;
+    margin: 12px 0;
+    break-inside: avoid;
+  }
+  .issue-card.positive { border-left-color: var(--eco-green); background: #fcfdfc; }
+  .issue-card.amber { border-left-color: var(--amber); }
+  .issue-card h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 4px;
+  }
+  .issue-card p {
+    font-size: 13px;
+    color: var(--gray-700);
+    margin-bottom: 0;
+    line-height: 1.7;
+  }
+
+  /* ═══════ PERFORMANCE SCORECARD ═══════ */
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 20px 0;
+  }
+  .score-card {
+    text-align: center;
+    padding: 20px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+  }
+  .score-card .score-value {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .score-card .score-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .score-red { color: var(--red); }
+  .score-amber { color: var(--amber); }
+  .score-green { color: var(--eco-green); }
+
+  /* ═══════ METRICS TABLE ═══════ */
+  .metrics-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    font-size: 13px;
+  }
+  .metrics-table thead th {
+    background: var(--eco-navy);
+    color: var(--white);
+    font-weight: 600;
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  .metrics-table tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: middle;
+  }
+  .metrics-table tbody tr:nth-child(even) { background: var(--gray-100); }
+  .metrics-table tbody tr:last-child td { border-bottom: none; }
+
+  /* ═══════ COST TABLE ═══════ */
+  .cost-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    font-size: 13px;
+  }
+  .cost-table thead th {
+    background: var(--eco-navy);
+    color: var(--white);
+    font-weight: 600;
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 12px;
+  }
+  .cost-table tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: top;
+  }
+  .cost-table tbody tr:nth-child(even) { background: var(--gray-100); }
+  .cost-table tbody tr:last-child td { border-bottom: none; }
+  .cost-table tfoot td {
+    background: linear-gradient(135deg, var(--eco-navy), #1a2d5e);
+    color: var(--white);
+    font-weight: 700;
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  /* ═══════ TECH CARDS ═══════ */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin: 20px 0;
+  }
+  .tech-card {
+    background: var(--light-bg);
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+    border: 1px solid var(--gray-200);
+  }
+  .tech-card .tech-layer {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--eco-green);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 4px;
+  }
+  .tech-card .tech-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--eco-navy);
+    margin-bottom: 4px;
+  }
+  .tech-card .tech-desc {
+    font-size: 11px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+
+  /* ═══════ VERDICT BOX ═══════ */
+  .verdict-box {
+    background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+    border: 1px solid #bbf7d0;
+    border-left: 3px solid var(--eco-green);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin: 20px 0;
+    break-inside: avoid;
+  }
+  .verdict-box h4 {
+    color: var(--eco-green);
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .verdict-box p { font-size: 13px; color: var(--gray-700); margin-bottom: 0; }
+
+  .warning-box {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border: 1px solid #fde68a;
+    border-left: 3px solid var(--amber);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin: 20px 0;
+    break-inside: avoid;
+  }
+  .warning-box h4 {
+    color: #92400e;
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .warning-box p { font-size: 13px; color: #78350f; margin-bottom: 0; }
+
+  /* ═══════ FOOTER ═══════ */
+  .page-footer {
+    text-align: center;
+    padding: 30px 60px;
+    color: var(--gray-500);
+    font-size: 11px;
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1500px;
+    margin: 0 auto;
+  }
+  .page-footer .covana-ft {
+    font-weight: 700;
+    color: var(--covana-orange);
+  }
+
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .cover-page { min-height: 100vh; }
+    .section-page { page-break-after: always; }
+    .screenshot-container, .issue-card, .score-card, .verdict-box, .warning-box { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ COVER PAGE ═══════════════ -->
+<div class="cover-page">
+  <div class="cover-logo-row">
+    <img src="covana-color.png" alt="covana" style="height: 35px;">
+  </div>
+  <div class="cover-badge">Confidential &bull; Website Audit &amp; Strategy</div>
+  <div class="cover-divider"></div>
+  <img src="1-econovus-logo.png" alt="Econovus" style="height: 50px; margin-bottom: 20px;">
+  <h1 class="cover-title">Website <span class="highlight">Analysis</span> &<br>Strategy Report</h1>
+  <p class="cover-subtitle">Comprehensive audit of the existing digital presence, competitive benchmarking against Nefab, PageSpeed performance analysis, and a detailed roadmap for building a world-class enterprise web platform.</p>
+
+  <div class="cover-footer">© 2026 Covana. All rights reserved. This document is confidential.</div>
+</div>
+
+
+
+
+<!-- ═══════════════ PROJECT REQUIREMENTS ═══════════════ -->
+<div class="section-page">
+  <div class="section-header">
+    <h2>Project Requirements & Scope</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <h3>Project Objective</h3>
+  <p>Build a modern, high-performance corporate website for Econovus (Engineered Packaging Solutions) that represents the brand professionally, improves user experience and lead generation, and is easy to manage.</p>
+
+  <h3>Website Pages (12)</h3>
+  <ul>
+    <li><strong>Home, About Us, Products / Solutions</strong></li>
+    <li><strong>Industries Served, Technology, Sustainability</strong></li>
+    <li><strong>Projects / Case Studies, Gallery, Blog / News</strong></li>
+    <li><strong>Contact Us, Privacy Policy, Terms & Conditions</strong></li>
+  </ul>
+
+  <h3>Core Features</h3>
+  <ul>
+    <li>Premium responsive design, mobile & tablet optimized</li>
+    <li>Performance-optimized architecture (SSR, metadata, schema)</li>
+    <li>Dynamic contact form & blog management</li>
+    <li>Custom admin panel + image/media management</li>
+    <li>Google Maps & social media integration</li>
+    <li>Analytics integration, security best practices</li>
+    <li>Fast loading, cross-browser compatible</li>
+    <li>Custom AI Chatbot (LangChain, RAG-based) — Q&A, appointment booking, lead capture</li>
+  </ul>
+</div>
+
+<!-- ═══════════════ 02 EXISTING WEBSITE AUDIT ═══════════════ -->
+<div class="section-page">
+  <div class="section-header">
+    
+    <h2>Existing Website Audit — Section-by-Section Critique</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <p>Below is a page-by-page analysis of the current Econovus website (econovus.co.in), using actual screenshots captured from the live site.</p>
+
+  <h3>2.1 — Hero Section & Navigation</h3>
+  <div class="screenshot-container">
+    <div class="screenshot-label"><span class="dot dot-red"></span> Current Website — Hero Section (econovus.co.in)</div>
+    <img src="ss_hero.png" alt="Econovus hero section">
+  </div>
+
+  <div class="issue-card">
+    <h4> Generic Template Hero with Blurry Background</h4>
+    <p>The hero uses a dark-green abstract background with generic eco-icons overlaid. No real product images, no engineering visuals, no sense of scale. Compare to Nefab which uses studio-quality photography of actual solutions in enterprise environments.</p>
+  </div>
+  
+  <div class="issue-card">
+    <h4> Navigation Lacks Industry Segmentation</h4>
+    <p>The nav bar is flat and generic. There is no "Industries" dropdown — a Defence procurement officer or a Renewable Energy supply chain manager cannot find relevant content. Nefab segments by Telecom, Energy, Vehicles, etc.</p>
+  </div>
+  <div class="issue-card">
+    <h4> Single, Weak CTA — "Contact Us"</h4>
+    <p>No option to "Request a Quote," "Download a Case Study," or "Explore by Industry." This fails to capture different buyer intents at different stages of the B2B sales funnel.</p>
+  </div>
+</div>
+
+<!-- SOLUTIONS -->
+<div class="section-page">
+  <h3>2.2 — About & Solutions Section</h3>
+  <div class="screenshot-container">
+    <div class="screenshot-label"><span class="dot dot-red"></span> Current Website — Solutions Grid</div>
+    <img src="ss_solutions.png" alt="Econovus solutions section">
+  </div>
+
+  <div class="issue-card">
+    <h4> Cartoon / Illustration-Based Imagery</h4>
+    <p>Solutions are represented with flat, isometric vector illustrations. This is fundamentally wrong for a B2B enterprise selling 1-ton+ engineered packaging to OEMs like Stellantis and GM. It looks playful and consumer-grade, not industrial. Nefab uses real photography and 3D product renders.</p>
+  </div>
+  <div class="issue-card">
+    <h4> No Visual Differentiation Between Solutions</h4>
+    <p>All six solution cards look identical — same illustration style, same layout. There is no visual hierarchy to guide the user toward strategically important offerings like "Dangerous Goods / UN Certified" packaging.</p>
+  </div>
+  <div class="issue-card">
+    <h4> Powerful Data Buried in Plain Text</h4>
+    <p>"Reduce carbon footprint by up to 93% and cost reduction by 10-15%" is compelling data — but it's presented as a plain paragraph with zero visual emphasis. This should be front-and-center with bold metrics and animated counters.</p>
+  </div>
+</div>
+
+<!-- WHY CHOOSE & GREEN SECTION -->
+<div class="section-page">
+  <h3>2.3 — "Why Choose Econovus?" & Sustainability Band</h3>
+  <div class="screenshot-container">
+    <div class="screenshot-label"><span class="dot dot-red"></span> Current Website — Value Props & Green Section</div>
+    <img src="ss_whychoose.png" alt="Econovus why choose section">
+  </div>
+
+  <div class="issue-card">
+    <h4> Value Propositions Are Just Labels</h4>
+    <p>"Innovation & Technology," "Sustainability," "Industry 4.0," "Cost-effective," "Reliable & Safe" — listed as plain text badges with small icons. No statistics, no case study links, no expandable content. A Procurement Head needs proof, not bullet points.</p>
+  </div>
+  <div class="issue-card">
+    <h4> Green Section Feels Unprofessional</h4>
+    <p>The dark-green band with an embedded YouTube thumbnail is visually cluttered — the thumbnail has its own internal branding text creating redundancy. This critical credibility section should feature a premium video with interactive sustainability metrics, not a basic YouTube embed.</p>
+  </div>
+  
+</div>
+
+<!-- STATS, CONTACT, FOOTER -->
+<div class="section-page">
+  <h3>2.4 — Statistics & Contact Section</h3>
+  <div class="screenshot-container">
+    <div class="screenshot-label"><span class="dot dot-red"></span> Current Website — Stats, Contact & Trust</div>
+    <img src="ss_contact.png" alt="Econovus contact section">
+  </div>
+
+  
+  
+  <div class="issue-card">
+    <h4> Generic Contact Form with No Lead Qualification</h4>
+    <p>Basic Name/Email/Phone form with visible reCAPTCHA. No industry selector, no requirement type dropdown. B2B lead forms should qualify leads by asking for Company, Industry, and Requirement Type.</p>
+  </div>
+
+  <h3>2.5 — Client Logos & Footer</h3>
+  <div class="screenshot-container">
+    <div class="screenshot-label"><span class="dot dot-red"></span> Current Website — Client Logos & Footer</div>
+    <img src="ss_footer.png" alt="Econovus footer section">
+  </div>
+
+  <div class="issue-card">
+    <h4> Client Logo Slider Lacks Interactivity</h4>
+    <p>The client logos are placed in a basic automated slider without user controls. There are no interactive elements, hover states, or links to dedicated case studies, which limits user engagement and navigational flow.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ 03 PAGESPEED ANALYSIS ═══════════════ -->
+<div class="section-page section-filled-light">
+  <div class="section-header">
+    
+    <h2>PageSpeed & Performance Analysis</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <p>Google PageSpeed Insights was run on econovus.co.in on September 8, 2026. The results confirm serious performance issues on both Desktop and Mobile — directly impacting user experience, conversion rates, and brand credibility.</p>
+
+  <h3>3.1 — Desktop Performance (Lighthouse Report)</h3>
+  <div class="side-by-side">
+  <div class="screenshot-container">
+    <div class="screenshot-label"><span class="dot dot-amber"></span> Google Lighthouse — econovus.co.in (Desktop) — Core Web Vitals: FAILED</div>
+    <img src="httpseconovus.co.in Desktop.jpeg" alt="Full PageSpeed Desktop Report">
+  </div>
+  <div class="data-col">
+
+
+  <div class="score-grid">
+    <div class="score-card"><div class="score-value score-amber">43</div><div class="score-label">Performance</div></div>
+    <div class="score-card"><div class="score-value score-amber">89</div><div class="score-label">Accessibility</div></div>
+    <div class="score-card"><div class="score-value score-amber">73</div><div class="score-label">Best Practices</div></div>
+    
+  </div>
+
+  <table class="metrics-table">
+    <thead><tr><th>Metric</th><th>Value</th><th>Status</th><th>Target</th></tr></thead>
+    <tbody>
+      <tr><td>Largest Contentful Paint (LCP)</td><td><strong>1.6s</strong></td><td style="color:var(--amber)"> Needs Improvement</td><td>&lt; 1.2s</td></tr>
+      <tr><td>Cumulative Layout Shift (CLS)</td><td><strong>0.22</strong></td><td style="color:var(--red)"> Poor</td><td>&lt; 0.1</td></tr>
+      <tr><td>First Contentful Paint (FCP)</td><td><strong>0.6s</strong></td><td style="color:var(--eco-green)"> Good</td><td>&lt; 0.9s</td></tr>
+      <tr><td>Total Blocking Time (TBT)</td><td><strong>2,300ms</strong></td><td style="color:var(--red)"> Poor</td><td>&lt; 200ms</td></tr>
+      <tr><td>Speed Index</td><td><strong>7.0s</strong></td><td style="color:var(--red)"> Poor</td><td>&lt; 3.4s</td></tr>
+    </tbody>
+  </table>
+
+  <div class="issue-card">
+    <h4> Core Web Vitals Assessment: FAILED</h4>
+    <p>Google's Core Web Vitals assessment shows a <strong>FAILED</strong> status for desktop with a CLS of 0.22 (far exceeding the 0.1 threshold). This directly impacts Google search rankings and organic visibility.</p>
+  </div>
+  </div>
+</div>
+
+  <h3>3.2 — Mobile Performance (Lighthouse Report)</h3>
+  <div class="side-by-side">
+  <div class="screenshot-container">
+    <div class="screenshot-label"><span class="dot dot-red"></span> Google Lighthouse — econovus.co.in (Mobile)</div>
+    <img src="httpseconovus.co.in Mobile.jpeg" alt="Full PageSpeed Mobile Report">
+  </div>
+  <div class="data-col">
+
+
+  <div class="score-grid">
+    <div class="score-card"><div class="score-value score-red">48</div><div class="score-label">Performance</div></div>
+    <div class="score-card"><div class="score-value score-amber">89</div><div class="score-label">Accessibility</div></div>
+    <div class="score-card"><div class="score-value score-amber">73</div><div class="score-label">Best Practices</div></div>
+    
+  </div>
+
+  <table class="metrics-table">
+    <thead><tr><th>Metric</th><th>Value</th><th>Status</th><th>Target</th></tr></thead>
+    <tbody>
+      <tr><td>Largest Contentful Paint (LCP)</td><td><strong>8.7s</strong></td><td style="color:var(--red)"> Poor</td><td>&lt; 2.5s</td></tr>
+      <tr><td>First Contentful Paint (FCP)</td><td><strong>2.4s</strong></td><td style="color:var(--red)"> Poor</td><td>&lt; 1.8s</td></tr>
+      <tr><td>Total Blocking Time (TBT)</td><td><strong>580ms</strong></td><td style="color:var(--red)"> Poor</td><td>&lt; 200ms</td></tr>
+      <tr><td>Speed Index</td><td><strong>42.8s</strong></td><td style="color:var(--red)"> Critical</td><td>&lt; 3.4s</td></tr>
+      <tr><td>Cumulative Layout Shift (CLS)</td><td><strong>0.011</strong></td><td style="color:var(--eco-green)"> Good</td><td>&lt; 0.1</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warning-box">
+    <h4> Critical: Mobile Speed Index is 42.8 seconds</h4>
+    <p>The mobile version takes over <strong>42 seconds</strong> to become visually complete. This means a buyer on their phone (e.g., checking Econovus at a trade show or before a meeting) will likely abandon the site before it even loads. The Elementor page builder's DOM bloat is the primary cause.</p>
+  </div>
+  </div>
+</div>
+
+  <h3>3.5 — Nefab PageSpeed Comparison</h3>
+  <div class="side-by-side">
+  <div class="screenshot-container">
+    <div class="screenshot-label"><span class="dot dot-green"></span> PageSpeed Insights — nefab.com (Desktop) — 58/100 Performance</div>
+    <img src="nefab D.jpeg" alt="Nefab PageSpeed Desktop">
+  </div>
+  <div class="data-col">
+
+
+  <div class="issue-card positive">
+    <h4> Nefab Comparison: Faster but also has room for improvement</h4>
+    <p>Nefab scores 58/100 on Desktop Performance with a Speed Index of 2.2s (vs Econovus's 9.3s). Their FCP is 0.9s (vs 1.2s). While Nefab isn't perfect, they are significantly faster — and more importantly, their architecture (custom-built, optimized) allows for improvement. Econovus's WordPress/Elementor stack has a hard performance ceiling.</p>
+  </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════ 04 DESIGN & UX PROBLEMS ═══════════════ -->
+<div class="section-page">
+  <div class="section-header">
+    
+    <h2>Design & UX Problems — Systemic Failures</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <p>Beyond individual section issues, there are systemic design failures that collectively undermine the brand:</p>
+
+  <h3>A. WordPress/Elementor Template Limitations</h3>
+  <p>The site is built on the <strong>Astra Theme + Elementor</strong>. This produces recognizable, generic layouts. For a company competing against Nefab (a global enterprise with a custom digital presence), this is a fundamental credibility gap.</p>
+
+  <h3>B. Inconsistent Visual Language</h3>
+  <ul>
+    <li><strong>Mixed imagery styles:</strong> Cartoon illustrations in Solutions, dark photography in Hero, YouTube thumbnails in Sustainability — no unified art direction.</li>
+    <li><strong>Inconsistent color application:</strong> Brand green (#0e793d) used for backgrounds, text, buttons, and icons without clear hierarchy.</li>
+    <li><strong>Varying button styles:</strong> Some filled, some outlined, different border radiuses — all on the same page.</li>
+  </ul>
+
+  <h3>C. Zero Micro-Animations & Interactivity</h3>
+  <p>Completely static — no scroll-triggered animations, no hover effects, no parallax, no animated counters. Modern enterprise sites feel <strong>"alive"</strong> and responsive to interaction.</p>
+
+  <h3>D. Missing Critical Pages</h3>
+  <p>Current site has only 7 nav items. The brief calls for <strong>12 dedicated pages</strong>: Industries Served, Case Studies, Gallery, Blog/News. Essential for B2B buyer research, thought leadership, and industry-specific user journeys.</p>
+
+  <h3>E. No Industry-Specific User Journeys</h3>
+  <p>A Defence procurement officer and a Renewable Energy supply chain manager have fundamentally different needs. The current site gives them the same generic experience — no segmentation, no tailored content, no targeted CTAs.</p>
+</div>
+
+<!-- ═══════════════ 05 COMPETITOR BENCHMARK ═══════════════ -->
+<div class="section-page section-filled-light">
+  <div class="section-header">
+    
+    <h2>Competitor Benchmark — The Nefab Standard</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <p>Per the brief, <strong>Nefab (nefab.com)</strong> is the explicit benchmark. Below are actual screenshots alongside analysis.</p>
+
+  <h3>5.1 — Nefab Hero Section</h3>
+  <div class="screenshot-container">
+    <div class="screenshot-label"><span class="dot dot-green"></span> Benchmark — Nefab Hero (nefab.com)</div>
+    <img src="nfab (1).png" alt="Nefab hero section">
+  </div>
+
+  <div class="issue-card positive">
+    <h4> Data-Driven Headline: "We save resources in supply chains"</h4>
+    <p>Immediately outcome-focused. Backed by "reduce total costs by 20% and carbon footprint by 31%." Speaks to CFO and Sustainability Officer simultaneously. Real photography of engineers working, not stock images.</p>
+  </div>
+
+  <h3>5.2 — Industry-Specific Journeys</h3>
+  <div class="screenshot-container">
+    <div class="screenshot-label"><span class="dot dot-green"></span> Benchmark — Nefab Industry Segmentation</div>
+    <img src="nfab (2).png" alt="Nefab industry sections">
+  </div>
+
+  <div class="issue-card positive">
+    <h4> "Sustainable packaging solutions for your industry"</h4>
+    <p>Dedicated visual cards for LIB & E-Mobility, Datacom and Cloud, Telecom — each with premium industry photography. Users immediately find content relevant to their sector. Econovus has no equivalent.</p>
+  </div>
+
+  <h3>5.3 — Premium CTA & Engagement Sections</h3>
+  <div class="screenshot-container">
+    <div class="screenshot-label"><span class="dot dot-green"></span> Benchmark — Nefab Engagement Section</div>
+    <img src="nfab (3).png" alt="Nefab packaging assessment">
+  </div>
+
+  <div class="issue-card positive">
+    <h4> Consultative CTA: "Is there untapped potential in your site's packaging?"</h4>
+    <p>Instead of a generic "Contact Us," Nefab uses consultative, value-driven CTAs. "Discover the packaging assessment" — this positions them as advisors, not vendors. Premium full-bleed photography of a branded Nefab employee adds trust.</p>
+  </div>
+
+  <h3>5.4 — Sustainability Leadership</h3>
+  <div class="screenshot-container">
+    <div class="screenshot-label"><span class="dot dot-green"></span> Benchmark — Nefab Sustainability Report</div>
+    <img src="nfab (4).png" alt="Nefab sustainability report">
+  </div>
+
+  <div class="issue-card positive">
+    <h4> Published Sustainability Report with Cinematic Imagery</h4>
+    <p>A dedicated section promoting their 2025 Sustainability Report with an aerial photograph of a container ship. This positions sustainability as core strategy, not a checkbox. Econovus (India's first carbon-neutral packaging company) should be leading on this — yet it's barely visible on the current site.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ 06 SIDE BY SIDE ═══════════════ -->
+<div class="section-page">
+  <div class="section-header">
+    
+    <h2>Side-by-Side Comparison</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <h3>Hero Sections</h3>
+  <div class="comparison-grid">
+    <div class="comparison-card">
+      <img src="ss_hero.png" alt="Econovus hero">
+      <div class="card-label label-current"> Econovus — Generic template, blurry BG, no data</div>
+    </div>
+    <div class="comparison-card">
+      <img src="nfab (1).png" alt="Nefab hero">
+      <div class="card-label label-benchmark"> Nefab — Premium photo, data-driven headline</div>
+    </div>
+  </div>
+
+  <h3>Solutions / Content Architecture</h3>
+  <div class="comparison-grid">
+    <div class="comparison-card">
+      <img src="ss_solutions.png" alt="Econovus solutions">
+      <div class="card-label label-current"> Econovus — Cartoon illustrations, no hierarchy</div>
+    </div>
+    <div class="comparison-card">
+      <img src="nfab (2).png" alt="Nefab industries">
+      <div class="card-label label-benchmark"> Nefab — Real photography, industry segmentation</div>
+    </div>
+  </div>
+
+  <h3>Call to Action (CTA) & Engagement</h3>
+  <div class="comparison-grid">
+    <div class="comparison-card">
+      <img src="ss_contact.png" alt="Econovus contact">
+      <div class="card-label label-current"> Econovus — Basic stats and generic contact form</div>
+    </div>
+    <div class="comparison-card">
+      <img src="nfab (3).png" alt="Nefab engagement">
+      <div class="card-label label-benchmark"> Nefab — Consultative CTA ("Packaging assessment")</div>
+    </div>
+  </div>
+
+  <h3>Sustainability Leadership</h3>
+  <div class="comparison-grid">
+    <div class="comparison-card">
+      <img src="ss_whychoose.png" alt="Econovus sustainability">
+      <div class="card-label label-current"> Econovus — Messy YouTube embed, casual tone</div>
+    </div>
+    <div class="comparison-card">
+      <img src="nfab (4).png" alt="Nefab sustainability report">
+      <div class="card-label label-benchmark"> Nefab — Dedicated report, cinematic photography</div>
+    </div>
+  </div>
+
+  <h3>Performance Scores</h3>
+  <table class="metrics-table">
+    <thead><tr><th>Metric</th><th>Econovus (Desktop)</th><th>Nefab (Desktop)</th><th>Winner</th></tr></thead>
+    <tbody>
+      <tr><td>Performance Score</td><td style="color:var(--red)"><strong>50/100</strong></td><td style="color:var(--amber)"><strong>58/100</strong></td><td>Nefab </td></tr>
+      <tr><td>First Contentful Paint</td><td><strong>1.2s</strong></td><td><strong>0.9s</strong></td><td>Nefab </td></tr>
+      <tr><td>Speed Index</td><td style="color:var(--red)"><strong>9.3s</strong></td><td><strong>2.2s</strong></td><td>Nefab  (4x faster)</td></tr>
+      <tr><td>Total Blocking Time</td><td style="color:var(--red)"><strong>820ms</strong></td><td><strong>580ms</strong></td><td>Nefab </td></tr>
+      <tr><td>Best Practices</td><td><strong>73</strong></td><td><strong>96</strong></td><td>Nefab </td></tr>
+    </tbody>
+  </table>
+
+  <div class="verdict-box">
+    <h4> Key Takeaway</h4>
+    <p>The gap is not cosmetic — it's a fundamental difference in how the brand presents itself to enterprise buyers. Nefab is <strong>4x faster</strong> on Speed Index. Their architecture is purpose-built for scale. Closing this gap requires abandoning templates entirely and building a custom web platform.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ 07 TECH STACK ═══════════════ -->
+<div class="section-page section-filled-dark">
+  <div class="section-header">
+    
+    <h2>Proposed Technology Stack & Architecture</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <p>To achieve a global-standard digital presence, we recommend migrating from WordPress to a modern, headless architecture:</p>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-layer">Frontend</div>
+      <div class="tech-name">Next.js + React.js</div>
+      <div class="tech-desc">Server-Side Rendering, sub-second load times, perfect accessibility</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-layer">Styling & Motion</div>
+      <div class="tech-name">Tailwind CSS + GSAP</div>
+      <div class="tech-desc">Premium 3D animations, scroll effects, micro-interactions</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-layer">Backend</div>
+      <div class="tech-name">Node.js + Express.js</div>
+      <div class="tech-desc">Lightweight, scalable API layer for all services</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-layer">Database</div>
+      <div class="tech-name">MongoDB</div>
+      <div class="tech-desc">Flexible document store for products, case studies, leads</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-layer">CMS</div>
+      <div class="tech-name">Custom Admin Panel</div>
+      <div class="tech-desc">Tailored content management — zero WordPress bloat</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-layer">AI Chatbot</div>
+      <div class="tech-name">LangChain + LLM API</div>
+      <div class="tech-desc">RAG-based Q&A, intelligent lead capture, 24/7 support</div>
+    </div>
+  </div>
+
+  <h3>Hosting Architecture</h3>
+  <ul>
+    <li><strong>Frontend:</strong> Vercel — Global edge network for sub-second page loads worldwide</li>
+    <li><strong>Backend & Database:</strong> AWS / DigitalOcean VPS — Secure, scalable infrastructure</li>
+    <li><strong>CDN:</strong> Cloudflare — DDoS protection, image optimization, global caching</li>
+  </ul>
+
+  <h3>Expected Performance Improvements</h3>
+  <table class="metrics-table">
+    <thead><tr><th>Metric</th><th>Current (WordPress)</th><th>Projected (Next.js)</th><th>Improvement</th></tr></thead>
+    <tbody>
+      <tr><td>Performance Score</td><td style="color:var(--red)">50/100</td><td style="color:var(--eco-green)"><strong>90+/100</strong></td><td>+80%</td></tr>
+      <tr><td>Speed Index (Desktop)</td><td style="color:var(--red)">9.3s</td><td style="color:var(--eco-green)"><strong>&lt;2.0s</strong></td><td>4.5x faster</td></tr>
+      <tr><td>Mobile Speed Index</td><td style="color:var(--red)">32.6s</td><td style="color:var(--eco-green)"><strong>&lt;4.0s</strong></td><td>8x faster</td></tr>
+      <tr><td>Total Blocking Time</td><td style="color:var(--red)">820ms</td><td style="color:var(--eco-green)"><strong>&lt;100ms</strong></td><td>8x better</td></tr>
+      <tr><td>Core Web Vitals</td><td style="color:var(--red)">FAILED</td><td style="color:var(--eco-green)"><strong>PASSED</strong></td><td>Enhanced Trust</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<div class="page-footer">
+  <span>© 2026 <img src="covana-color.png" alt="Covana" style="height: 14px; vertical-align: middle; margin-left: 4px; margin-bottom: 2px;">. All rights reserved.</span>
+  <span>Confidential — Prepared for Econovus Packaging Pvt. Ltd.</span>
+</div>
+
+</body>
+</html>
