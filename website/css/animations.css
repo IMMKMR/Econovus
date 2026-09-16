@@ -1,0 +1,118 @@
+/* ═══════════════════════════════════════════
+   ECONOVUS — Animation Utilities
+   GSAP-compatible animation classes
+   ═══════════════════════════════════════════ */
+
+/* ═══════ BASE HIDDEN STATES ═══════ */
+[data-anim] {
+  opacity: 0;
+}
+
+[data-anim="fade-up"] {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+[data-anim="fade-down"] {
+  opacity: 0;
+  transform: translateY(-40px);
+}
+
+[data-anim="scale-in"] {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+[data-anim="slide-in"] {
+  opacity: 0;
+  transform: translateX(60px);
+}
+
+[data-anim="split-lines"],
+[data-anim="split-words"] {
+  opacity: 1;
+}
+
+[data-anim="split-lines"] .line,
+[data-anim="split-words"] .word-group,
+[data-anim="split-words"] .word-accent,
+[data-anim="split-words"] .word-highlight {
+  opacity: 0;
+  transform: translateY(100%);
+  display: inline-block;
+}
+
+[data-anim="draw-svg"] {
+  opacity: 0;
+}
+
+[data-anim="card-3d"] {
+  opacity: 0;
+  transform: translateY(50px) rotateX(5deg);
+}
+
+[data-anim="counter"] {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* ═══════ ANIMATED STATES (added by GSAP) ═══════ */
+.anim-visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ═══════ 3D CARD TILT EFFECT ═══════ */
+.card-3d-active .card-inner {
+  transition: transform 0.1s linear;
+}
+
+/* ═══════ LINE GLOW ANIMATION ═══════ */
+@keyframes lineGlow {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.glow-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(164, 187, 18, 0) 25%,
+    rgba(164, 187, 18, 0.6) 50%,
+    rgba(164, 187, 18, 0) 75%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: lineGlow 3s linear infinite;
+}
+
+/* ═══════ PARTICLE GLOW ═══════ */
+@keyframes particleFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-15px) rotate(5deg); }
+  66% { transform: translateY(5px) rotate(-3deg); }
+}
+
+/* ═══════ STAT BAR ANIMATION ═══════ */
+.stat-bar-fill.animate {
+  transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ═══════ MARQUEE PAUSE ON HOVER ═══════ */
+.trust-marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ═══════ SMOOTH SCROLL LENIS OVERRIDES ═══════ */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
