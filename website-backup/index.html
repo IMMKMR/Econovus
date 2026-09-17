@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Econovus — Engineered Packaging Solutions | India's First Carbon-Neutral Packaging</title>
+  <meta name="description" content="Econovus delivers sustainable, engineered industrial packaging solutions. Reduce carbon footprint by 93% with India's first carbon-neutral packaging company.">
+  <meta name="keywords" content="Econovus, sustainable packaging, industrial packaging, export packaging, carbon neutral, engineered packaging, India">
+  <meta name="theme-color" content="#0e5314">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/animations.css">
+</head>
+<body>
+
+  <!-- ═══════ 3D CANVAS ═══════ -->
+  <canvas id="webgl-canvas" class="webgl-canvas"></canvas>
+
+  <!-- ═══════ PRELOADER ═══════ -->
+  <div id="preloader" class="preloader">
+    <div class="preloader-inner">
+      <svg class="preloader-leaf" viewBox="0 0 289.17 263.41" width="60" height="55">
+        <path fill="#a4bb12" d="M76.78,48.11C25.03,83.78,2.76,146.34,25.99,205.52-16.55,150.28-5.33,77.19,48.38,33.29l28.41,14.82Z"/>
+        <path fill="#56891b" d="M119.06,69.92l-2.54,3.78c-9.73,5.84-18.57,12.99-27,20.55l-.14,3.19-27.14-13.59-.11,44.45-2.05,8.7c-13.25,29.62-14.07,63.48-3.07,93.94l-.31,4.81c-8.5-4.66-15.15-11.96-22.26-18.97-3.74-3.68-6.83-7.11-8.47-11.27-12.68-21.74-13.51-50.73-8.25-74.91,6.94-31.94,27.5-63.03,54.46-81.69.57-.39,1.31-.55,2.09-.69s1.65-.15,2.49-.12l42.28,21.81Z"/>
+        <path fill="#054610" d="M275.08,110.31c-1.04,1.42-2.33,2.16-4.24,3.4l-132.01,70.37.11,37.26,150.24-81.91c-2.11,33.54-17.64,62.5-41.11,84.32-23.39,21.71-52.73,34.74-84.49,38.38-17.72,2.45-34.76,1.2-51.69-2.26-2.51-.68-4.13-1.92-4.87-3.73-6.26-75.37,49.76-135.03,122.07-147.3,7.8-1.32,37.32-4.36,43.43-1.09,1.12.6,2,1.4,2.58,2.56Z"/>
+      </svg>
+      <div class="preloader-text">ECONOVUS</div>
+      <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- ═══════ HEADER ═══════ -->
+  <header id="main-header" class="header" style="opacity: 0; pointer-events: none; transform: translateY(-100%);">
+    <div class="header-inner">
+      <a href="#" class="header-logo" id="header-logo">
+        <img src="/assets/logos/econovus-wordmark.svg" alt="Econovus" height="36">
+      </a>
+      <nav class="header-nav" id="header-nav">
+        <a href="#hero" class="nav-link">Home</a>
+        <a href="#solutions" class="nav-link">Solutions</a>
+        <a href="#industries" class="nav-link">Industries</a>
+        <a href="#sustainability" class="nav-link">Sustainability</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+      <div class="header-cta">
+        <a href="#contact" class="btn btn-primary" id="header-cta-btn">
+          <span>Get Assessment</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══════ SECTION 1: CINEMATIC HERO ═══════ -->
+    <section id="hero" class="section section-hero" style="height: 100vh;">
+      <!-- Content removed for product-focused scroll -->
+
+      <button class="scroll-indicator" id="scroll-indicator" aria-label="Scroll down">
+        <span class="scroll-text">Scroll to explore</span>
+        <div class="scroll-arrow">
+          <svg width="16" height="60" viewBox="0 0 16 60" fill="none">
+            <line x1="8" y1="0" x2="8" y2="50" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M1 43l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </button>
+    </section>
+
+
+    <!-- ═══════ SECTION 3: SOLUTIONS SHOWCASE ═══════ -->
+    <section id="solutions" class="section section-solutions">
+      <div class="container">
+        <div class="section-head" data-anim="fade-up">
+          <p class="overline">Our Solutions</p>
+          <h2 class="section-title">Engineered for<br><strong>every challenge.</strong></h2>
+        </div>
+
+
+      </div>
+    </section>
+
+    <!-- ═══════ SECTION 4: STATS COUNTER ═══════ -->
+    <section id="stats" class="section section-stats">
+      <div class="stats-bg">
+        <div class="stats-gradient"></div>
+      </div>
+      <div class="container">
+        <div class="stats-content">
+          <div class="stats-header" data-anim="fade-up">
+            <p class="overline overline-light">Impact & Scale</p>
+            <h2 class="section-title section-title-light">Numbers that<br><strong>define our mission.</strong></h2>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-item" data-anim="counter" data-delay="0">
+              <div class="stat-value">
+                <span class="stat-number" data-target="93">0</span><span class="stat-suffix">%</span>
+              </div>
+              <div class="stat-label">Carbon Footprint<br>Reduction</div>
+              <div class="stat-bar"><div class="stat-bar-fill" data-width="93"></div></div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item" data-anim="counter" data-delay="0.15">
+              <div class="stat-value">
+                <span class="stat-number" data-target="15">0</span><span class="stat-suffix">%</span>
+              </div>
+              <div class="stat-label">Cost Savings<br>for Clients</div>
+              <div class="stat-bar"><div class="stat-bar-fill" data-width="65"></div></div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item" data-anim="counter" data-delay="0.3">
+              <div class="stat-value">
+                <span class="stat-prefix">1</span><span class="stat-suffix"> Ton+</span>
+              </div>
+              <div class="stat-label">Heavy-Duty<br>Capacity</div>
+              <div class="stat-bar"><div class="stat-bar-fill" data-width="100"></div></div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item" data-anim="counter" data-delay="0.45">
+              <div class="stat-value">
+                <span class="stat-number" data-target="500">0</span><span class="stat-suffix">+</span>
+              </div>
+              <div class="stat-label">Projects<br>Delivered</div>
+              <div class="stat-bar"><div class="stat-bar-fill" data-width="80"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════ SECTION 5: INDUSTRIES SERVED ═══════ -->
+    <section id="industries" class="section section-industries">
+      <div class="container">
+        <div class="section-head" data-anim="fade-up">
+          <p class="overline">Industries We Serve</p>
+          <h2 class="section-title">Packaging solutions<br><strong>for your industry.</strong></h2>
+        </div>
+      </div>
+      <div class="industries-track" id="industries-track">
+        <div class="industry-card" data-anim="slide-in" data-delay="0">
+          <div class="industry-image">
+            <img src="/assets/images/industry-automotive.png" alt="Automotive Industry" loading="lazy">
+          </div>
+          <div class="industry-overlay">
+            <span class="industry-tag">01</span>
+            <h3>Automotive</h3>
+            <p>OEM parts, assemblies, and complete vehicle component packaging</p>
+          </div>
+        </div>
+        <div class="industry-card" data-anim="slide-in" data-delay="0.1">
+          <div class="industry-image">
+            <img src="/assets/images/industry-renewable.png" alt="Renewable Energy" loading="lazy">
+          </div>
+          <div class="industry-overlay">
+            <span class="industry-tag">02</span>
+            <h3>Renewable Energy</h3>
+            <p>Solar panels, wind turbine components, battery systems</p>
+          </div>
+        </div>
+        <div class="industry-card" data-anim="slide-in" data-delay="0.2">
+          <div class="industry-image">
+            <img src="/assets/images/industry-defence.png" alt="Defence" loading="lazy">
+          </div>
+          <div class="industry-overlay">
+            <span class="industry-tag">03</span>
+            <h3>Defence</h3>
+            <p>Military-grade packaging for sensitive equipment and armaments</p>
+          </div>
+        </div>
+        <div class="industry-card" data-anim="slide-in" data-delay="0.3">
+          <div class="industry-image">
+            <img src="/assets/images/hero-packaging.png" alt="Heavy Industry" loading="lazy">
+          </div>
+          <div class="industry-overlay">
+            <span class="industry-tag">04</span>
+            <h3>Heavy Industry</h3>
+            <p>Large-scale industrial equipment and machinery packaging</p>
+          </div>
+        </div>
+        <div class="industry-card" data-anim="slide-in" data-delay="0.4">
+          <div class="industry-image">
+            <img src="/assets/images/factory-aerial.png" alt="Export Logistics" loading="lazy">
+          </div>
+          <div class="industry-overlay">
+            <span class="industry-tag">05</span>
+            <h3>Export Logistics</h3>
+            <p>End-to-end containerisation and global shipping solutions</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════ SECTION 6: SUSTAINABILITY ═══════ -->
+    <section id="sustainability" class="section section-sustainability">
+      <div class="sustainability-bg">
+        <img src="/assets/images/sustainability-forest.png" alt="" class="sustainability-bg-img" loading="lazy">
+        <div class="sustainability-overlay"></div>
+      </div>
+      <div class="container sustainability-content">
+        <div class="sustainability-badge" data-anim="fade-up">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2C6 2 3 5 3 9c0 5 7 9 7 9s7-4 7-9c0-4-3-7-7-7z" fill="currentColor" opacity="0.3"/><path d="M10 6v4l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>Sustainability</span>
+        </div>
+        <h2 class="sustainability-title" data-anim="split-lines">
+          India's First<br>Carbon-Neutral<br>Packaging Company.
+        </h2>
+        <div class="sustainability-metrics">
+          <div class="sust-metric" data-anim="fade-up" data-delay="0.2">
+            <span class="sust-metric-value">100%</span>
+            <span class="sust-metric-label">Sustainable Materials</span>
+          </div>
+          <div class="sust-metric" data-anim="fade-up" data-delay="0.4">
+            <span class="sust-metric-value">Zero</span>
+            <span class="sust-metric-label">Waste to Landfill</span>
+          </div>
+          <div class="sust-metric" data-anim="fade-up" data-delay="0.6">
+            <span class="sust-metric-value">Patented</span>
+            <span class="sust-metric-label">Green Technology</span>
+          </div>
+        </div>
+        <div class="sustainability-locations" data-anim="fade-up" data-delay="0.8">
+          <div class="location-dot"></div>
+          <span>Manufacturing: Pune</span>
+          <div class="location-divider"></div>
+          <span>Chennai</span>
+          <div class="location-divider"></div>
+          <span>Expanding to 10-12 plants across India</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════ SECTION 7: CLIENT TRUST ═══════ -->
+    <section id="trust" class="section section-trust">
+      <div class="container">
+        <div class="section-head" data-anim="fade-up">
+          <p class="overline">Trusted By Industry Leaders</p>
+          <h2 class="section-title">Delivering excellence to<br><strong>global enterprises.</strong></h2>
+        </div>
+        <div class="trust-marquee" data-anim="fade-up">
+          <div class="marquee-track">
+            <div class="marquee-item">Stellantis</div>
+            <div class="marquee-item">General Motors</div>
+            <div class="marquee-item">Tata Motors</div>
+            <div class="marquee-item">Mahindra</div>
+            <div class="marquee-item">Bajaj Auto</div>
+            <div class="marquee-item">Bharat Forge</div>
+            <div class="marquee-item">L&T</div>
+            <div class="marquee-item">Adani</div>
+            <!-- duplicate for infinite scroll -->
+            <div class="marquee-item">Stellantis</div>
+            <div class="marquee-item">General Motors</div>
+            <div class="marquee-item">Tata Motors</div>
+            <div class="marquee-item">Mahindra</div>
+            <div class="marquee-item">Bajaj Auto</div>
+            <div class="marquee-item">Bharat Forge</div>
+            <div class="marquee-item">L&T</div>
+            <div class="marquee-item">Adani</div>
+          </div>
+        </div>
+        <div class="trust-testimonial" data-anim="fade-up" data-delay="0.3">
+          <div class="testimonial-card">
+            <svg class="quote-icon" width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <path d="M10 25c-3 0-5-2-5-5 0-5 4-10 10-12l1 2c-4 2-6 5-6 7 1 0 2 0 3 1s2 2 2 4c0 1-1 2-2 3h-3zm15 0c-3 0-5-2-5-5 0-5 4-10 10-12l1 2c-4 2-6 5-6 7 1 0 2 0 3 1s2 2 2 4c0 1-1 2-2 3h-3z" fill="currentColor" opacity="0.15"/>
+            </svg>
+            <blockquote>
+              "Econovus transformed our export packaging operations. Their engineering-first approach reduced our logistics costs by 15% while making our entire supply chain carbon-neutral."
+            </blockquote>
+            <div class="testimonial-author">
+              <div class="author-info">
+                <strong>Supply Chain Director</strong>
+                <span>Leading Automotive OEM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════ SECTION 8: CONTACT CTA ═══════ -->
+    <section id="contact" class="section section-contact">
+      <div class="contact-bg"></div>
+      <div class="container">
+        <div class="contact-layout">
+          <div class="contact-text">
+            <p class="overline overline-light" data-anim="fade-up">Get Started</p>
+            <h2 class="contact-title" data-anim="split-lines">
+              Is there untapped<br>potential in your<br>packaging?
+            </h2>
+            <p class="contact-subtitle" data-anim="fade-up" data-delay="0.3">
+              Discover how Econovus can engineer a solution that reduces your costs by up to 15% and your carbon footprint by 93%.
+            </p>
+            <div class="contact-info" data-anim="fade-up" data-delay="0.5">
+              <div class="info-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 7l7 5 7-5" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>
+                <span>info@econovus.co.in</span>
+              </div>
+              <div class="info-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2C6 2 3 5.5 3 10c0 6 7 8 7 8s7-2 7-8c0-4.5-3-8-7-8z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                <span>Pune &amp; Chennai, India</span>
+              </div>
+            </div>
+          </div>
+          <div class="contact-form-wrap" data-anim="fade-up" data-delay="0.2">
+            <form class="contact-form" id="contact-form">
+              <h3 class="form-title">Request a Packaging Assessment</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="company">Company *</label>
+                  <input type="text" id="company" name="company" placeholder="Your company name" required>
+                </div>
+                <div class="form-group">
+                  <label for="name">Full Name *</label>
+                  <input type="text" id="name" name="name" placeholder="Your full name" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <input type="email" id="email" name="email" placeholder="work@company.com" required>
+                </div>
+                <div class="form-group">
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" name="phone" placeholder="+91 XXXXXXXXXX">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="industry">Industry</label>
+                <select id="industry" name="industry">
+                  <option value="">Select your industry</option>
+                  <option value="automotive">Automotive</option>
+                  <option value="renewable">Renewable Energy</option>
+                  <option value="defence">Defence</option>
+                  <option value="heavy-industry">Heavy Industry</option>
+                  <option value="export-logistics">Export Logistics</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="message">Requirement Details</label>
+                <textarea id="message" name="message" rows="4" placeholder="Tell us about your packaging needs..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg btn-full" id="submit-btn">
+                <span>Get Your Free Assessment</span>
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════ FOOTER ═══════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="/assets/logos/econovus-wordmark.svg" alt="Econovus" height="40">
+          <p class="footer-tagline">Engineered Packaging Solutions for a sustainable future.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Solutions</h4>
+            <a href="#">Export Packaging</a>
+            <a href="#">Dangerous Goods</a>
+            <a href="#">Automotive</a>
+            <a href="#">Returnable Systems</a>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <a href="#">About Us</a>
+            <a href="#">Sustainability</a>
+            <a href="#">Technology</a>
+            <a href="#">Careers</a>
+          </div>
+          <div class="footer-col">
+            <h4>Connect</h4>
+            <a href="#">LinkedIn</a>
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">Contact Us</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Econovus Packaging Pvt. Ltd. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>
