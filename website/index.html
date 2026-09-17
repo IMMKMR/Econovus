@@ -25,13 +25,75 @@
   <!-- ═══════ PRELOADER ═══════ -->
   <div id="preloader" class="preloader">
     <div class="preloader-inner">
-      <svg class="preloader-leaf" viewBox="0 0 289.17 263.41" width="60" height="55">
-        <path fill="#a4bb12" d="M76.78,48.11C25.03,83.78,2.76,146.34,25.99,205.52-16.55,150.28-5.33,77.19,48.38,33.29l28.41,14.82Z"/>
-        <path fill="#56891b" d="M119.06,69.92l-2.54,3.78c-9.73,5.84-18.57,12.99-27,20.55l-.14,3.19-27.14-13.59-.11,44.45-2.05,8.7c-13.25,29.62-14.07,63.48-3.07,93.94l-.31,4.81c-8.5-4.66-15.15-11.96-22.26-18.97-3.74-3.68-6.83-7.11-8.47-11.27-12.68-21.74-13.51-50.73-8.25-74.91,6.94-31.94,27.5-63.03,54.46-81.69.57-.39,1.31-.55,2.09-.69s1.65-.15,2.49-.12l42.28,21.81Z"/>
-        <path fill="#054610" d="M275.08,110.31c-1.04,1.42-2.33,2.16-4.24,3.4l-132.01,70.37.11,37.26,150.24-81.91c-2.11,33.54-17.64,62.5-41.11,84.32-23.39,21.71-52.73,34.74-84.49,38.38-17.72,2.45-34.76,1.2-51.69-2.26-2.51-.68-4.13-1.92-4.87-3.73-6.26-75.37,49.76-135.03,122.07-147.3,7.8-1.32,37.32-4.36,43.43-1.09,1.12.6,2,1.4,2.58,2.56Z"/>
-      </svg>
+      <img src="/assets/logos/econovus-icon.svg" alt="Econovus" class="preloader-logo" width="60" height="60">
       <div class="preloader-text">ECONOVUS</div>
       <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- ═══════ SCROLL PROGRESS BAR ═══════ -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ═══════ INTERACTIVE HERO OVERLAY ═══════ -->
+  <div class="hero-overlay-layer" id="hero-overlay">
+    <!-- Branding -->
+    <div class="hero-brand" id="hero-brand">
+      <img src="/assets/logos/econovus-icon.svg" alt="" class="hero-brand-icon" width="32" height="32">
+      <span class="hero-brand-name">ECONOVUS</span>
+    </div>
+
+    <!-- Main Headline -->
+    <div class="hero-text-block" id="hero-text-block">
+      <p class="hero-overline" id="hero-overline">
+        <span class="hero-overline-dot"></span>
+        India's First Carbon-Neutral Packaging
+      </p>
+      <h1 class="hero-main-title" id="hero-main-title">
+        <span class="hero-title-line" data-hero-anim="line">Engineering</span>
+        <span class="hero-title-line hero-title-accent" data-hero-anim="line">Sustainable</span>
+        <span class="hero-title-line" data-hero-anim="line">Packaging.</span>
+      </h1>
+      <p class="hero-description" id="hero-description">
+        Precision-engineered industrial packaging that reduces your carbon footprint by 93% — without compromising strength.
+      </p>
+      <div class="hero-cta-group" id="hero-cta-group">
+        <a href="#contact" class="btn btn-primary btn-hero" id="hero-cta-btn">
+          <span>Explore Solutions</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#solutions" class="btn btn-ghost btn-hero" id="hero-ghost-btn">
+          <span>View Process</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mini Stats Strip -->
+    <div class="hero-stats-strip" id="hero-stats-strip">
+      <div class="hero-mini-stat" data-hero-anim="stat">
+        <span class="hero-mini-value">93%</span>
+        <span class="hero-mini-label">Carbon Reduction</span>
+      </div>
+      <div class="hero-mini-divider"></div>
+      <div class="hero-mini-stat" data-hero-anim="stat">
+        <span class="hero-mini-value">500+</span>
+        <span class="hero-mini-label">Projects Delivered</span>
+      </div>
+      <div class="hero-mini-divider"></div>
+      <div class="hero-mini-stat" data-hero-anim="stat">
+        <span class="hero-mini-value">1 Ton+</span>
+        <span class="hero-mini-label">Heavy-Duty Capacity</span>
+      </div>
+    </div>
+
+    <!-- Single Hotspot on the Product (positioned by JS) -->
+    <div class="hotspot" id="hotspot-product" data-hotspot="product">
+      <div class="hotspot-ring"></div>
+      <div class="hotspot-ring hotspot-ring-outer"></div>
+      <div class="hotspot-dot"></div>
+      <div class="hotspot-label">
+        <span>Click to explore</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
     </div>
   </div>
 
@@ -80,12 +142,57 @@
     <!-- ═══════ SECTION 3: SOLUTIONS SHOWCASE ═══════ -->
     <section id="solutions" class="section section-solutions">
       <div class="container">
-        <div class="section-head" data-anim="fade-up">
-          <p class="overline">Our Solutions</p>
-          <h2 class="section-title">Engineered for<br><strong>every challenge.</strong></h2>
+        <div class="solutions-showcase-layout">
+          <!-- Left: copy slides (stacked, only one visible at a time) -->
+          <div class="solutions-copy-area">
+            <p class="overline" data-anim="fade-up">Our Solutions</p>
+
+            <!-- Slide 1: Industrial Containers -->
+            <div class="solutions-slide active" id="solutions-slide-1">
+              <span class="solutions-slide-num">01</span>
+              <h2 class="solutions-slide-title">Engineered for<br><strong>every challenge.</strong></h2>
+              <p class="solutions-slide-desc">Heavy-duty industrial containers built to withstand the toughest logistics environments. Designed for multi-trip use, reducing waste and cost.</p>
+              <div class="solutions-slide-tags">
+                <span class="solutions-tag">Multi-Trip</span>
+                <span class="solutions-tag">1 Ton+ Capacity</span>
+                <span class="solutions-tag">Foldable</span>
+              </div>
+            </div>
+
+            <!-- Slide 2: Export Packaging -->
+            <div class="solutions-slide" id="solutions-slide-2">
+              <span class="solutions-slide-num">02</span>
+              <h2 class="solutions-slide-title">Export-ready<br><strong>packaging systems.</strong></h2>
+              <p class="solutions-slide-desc">ISPM-15 compliant packaging engineered for safe global transit. Custom-fit solutions that protect high-value machinery and components.</p>
+              <div class="solutions-slide-tags">
+                <span class="solutions-tag">ISPM-15</span>
+                <span class="solutions-tag">Custom-Fit</span>
+                <span class="solutions-tag">Global Transit</span>
+              </div>
+            </div>
+
+            <!-- Slide 3: Returnable Packaging -->
+            <div class="solutions-slide" id="solutions-slide-3">
+              <span class="solutions-slide-num">03</span>
+              <h2 class="solutions-slide-title">Sustainable<br><strong>returnable systems.</strong></h2>
+              <p class="solutions-slide-desc">Closed-loop returnable packaging that eliminates single-use waste. Engineered for durability across hundreds of shipping cycles.</p>
+              <div class="solutions-slide-tags">
+                <span class="solutions-tag">Closed-Loop</span>
+                <span class="solutions-tag">Zero Waste</span>
+                <span class="solutions-tag">500+ Cycles</span>
+              </div>
+            </div>
+
+            <!-- Slide progress indicator -->
+            <div class="solutions-slide-progress">
+              <div class="solutions-progress-dot active" data-slide="1"></div>
+              <div class="solutions-progress-dot" data-slide="2"></div>
+              <div class="solutions-progress-dot" data-slide="3"></div>
+            </div>
+          </div>
+
+          <!-- Right: 3D container rendered by Three.js canvas (no HTML needed) -->
         </div>
-
-
       </div>
     </section>
 
