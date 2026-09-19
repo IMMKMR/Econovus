@@ -178,15 +178,9 @@ button {
 }
 
 .preloader-logo {
-  width: 60px;
-  height: 60px;
-  margin-bottom: var(--space-lg);
-  animation: preloaderPulse 1.5s ease-in-out infinite;
-}
-
-@keyframes preloaderPulse {
-  0%, 100% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.1); opacity: 1; }
+  width: 150px;
+  height: 150px;
+  margin: 0 auto var(--space-md) auto;
 }
 
 .preloader-text {
@@ -201,6 +195,7 @@ button {
 .preloader-bar {
   width: 200px;
   height: 2px;
+  margin: 0 auto;
   background: rgba(255,255,255,0.1);
   border-radius: 2px;
   overflow: hidden;
@@ -226,18 +221,19 @@ button {
   right: 0;
   z-index: 1000;
   height: var(--header-height);
-  background: rgba(10, 10, 10, 0.25);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   transition: all 0.5s var(--ease-out);
 }
 
 .header.scrolled {
-  background: rgba(10, 10, 10, 0.88);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(164, 187, 18, 0.15);
-  box-shadow: 0 1px 30px rgba(0, 0, 0, 0.3), inset 0 -1px 0 rgba(164, 187, 18, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
 }
 
 .header-inner {
@@ -267,7 +263,7 @@ button {
 .nav-link {
   font-size: 13px;
   font-weight: 500;
-  color: rgba(255,255,255,0.6);
+  color: var(--gray-600);
   letter-spacing: 0.5px;
   transition: color var(--duration-normal) var(--ease-out);
   position: relative;
@@ -289,7 +285,7 @@ button {
 }
 
 .nav-link:hover {
-  color: var(--white);
+  color: var(--gray-900);
 }
 
 .nav-link:hover::after {
@@ -298,7 +294,7 @@ button {
 }
 
 .nav-link.active {
-  color: var(--eco-lime);
+  color: var(--eco-forest);
 }
 
 .nav-link.active::after {
@@ -364,13 +360,13 @@ button {
 
 .btn-ghost {
   background: transparent;
-  color: var(--white);
-  border: 1px solid rgba(255,255,255,0.25);
+  color: var(--gray-900);
+  border: 1px solid rgba(0,0,0,0.15);
 }
 
 .btn-ghost:hover {
-  background: rgba(255,255,255,0.08);
-  border-color: rgba(255,255,255,0.4);
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.3);
   transform: translateY(-2px);
 }
 
@@ -570,13 +566,13 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: rgba(255,255,255,0.4);
+  color: var(--gray-500);
   cursor: pointer;
   transition: color var(--duration-fast);
 }
 
 .scroll-indicator:hover {
-  color: rgba(255,255,255,0.8);
+  color: var(--gray-900);
 }
 
 .scroll-text {
@@ -718,17 +714,20 @@ button {
 }
 
 .solutions-slide-num {
-  display: inline-block;
-  font-size: 64px;
+  position: absolute;
+  top: -30px;
+  left: -10px;
+  font-size: 100px;
   font-weight: 900;
   font-family: var(--font-primary);
-  background: linear-gradient(135deg, rgba(164, 187, 18, 0.15), rgba(14, 83, 20, 0.08));
+  background: linear-gradient(135deg, rgba(164, 187, 18, 0.2), rgba(14, 83, 20, 0.05));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   line-height: 1;
-  margin-bottom: var(--space-md);
   letter-spacing: -3px;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .solutions-slide-title {
@@ -1160,6 +1159,8 @@ button {
   display: flex;
   align-items: center;
   position: relative;
+  background: #0a0a0a; /* Ensure the 3D scene does not show through transparent parts of the image */
+  overflow: hidden;
 }
 
 .sustainability-bg {
@@ -1173,6 +1174,9 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center bottom;
+  transform: scale(2);
+  transform-origin: bottom center;
 }
 
 .sustainability-overlay {
@@ -1663,7 +1667,7 @@ button {
   gap: 10px;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 3px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--eco-lime);
   margin-bottom: 20px;
@@ -1686,7 +1690,7 @@ button {
   font-weight: 800;
   line-height: 1.05;
   letter-spacing: -2px;
-  color: var(--white);
+  color: var(--gray-900);
   margin-bottom: 20px;
 }
 
@@ -1707,7 +1711,7 @@ button {
 .hero-description {
   font-size: 16px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--gray-600);
   line-height: 1.7;
   margin-bottom: 32px;
   max-width: 480px;
@@ -1957,6 +1961,11 @@ button {
     display: flex;
   }
 
+  /* Dark hamburger lines for light header */
+  .mobile-menu-btn span {
+    background: var(--gray-900);
+  }
+
   .statement-layout {
     grid-template-columns: 1fr;
     gap: var(--space-xl);
@@ -2000,61 +2009,190 @@ button {
     --space-4xl: 100px;
   }
 
-  .hero-text-block {
-    bottom: 120px;
-    left: 16px;
-    right: 16px;
-    max-width: 100%;
+  /* ── Header ── */
+  .header-inner {
+    padding: 0 16px;
   }
 
-  .hero-main-title {
-    font-size: clamp(32px, 8vw, 48px);
-    letter-spacing: -1px;
+  .header-logo img {
+    height: 28px !important;
   }
 
-  .hero-description {
-    font-size: 14px;
-    max-width: 100%;
+  /* Hide CTA button on mobile, keep hamburger */
+  .header-cta {
+    display: none;
   }
 
-  .hero-stats-strip {
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
-    gap: 16px;
-    padding: 14px 20px;
-    justify-content: center;
+  /* ── Hero 3D Overlay ── */
+  .hero-overlay-layer {
+    /* Let it scroll with the page on mobile instead of fixed overlay */
+    position: absolute;
+    height: 100vh;
   }
 
   .hero-brand {
     left: 16px;
-    top: 20px;
+    top: 16px;
+  }
+
+  .hero-brand img {
+    height: 24px !important;
+  }
+
+  /* Text block sits in the top portion with a frosted glass background */
+  .hero-text-block {
+    bottom: auto;
+    top: 56px;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 20px 16px 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .hero-main-title {
+    font-size: clamp(26px, 7vw, 36px);
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+
+  .hero-description {
+    font-size: 13px;
+    max-width: 100%;
+    line-height: 1.5;
+    margin-bottom: 16px;
   }
 
   .hero-cta-group {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
   }
 
-  .hero-title {
-    letter-spacing: -1px;
+  .hero-cta-group .btn {
+    padding: 10px 20px;
+    font-size: 12px;
   }
 
-  .hero-subtitle br {
+  /* Stats strip at the very bottom of the hero viewport */
+  .hero-stats-strip {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    gap: 12px;
+    padding: 12px 16px;
+    justify-content: space-between;
+  }
+
+  .hero-mini-value {
+    font-size: 16px;
+  }
+
+  .hero-mini-label {
+    font-size: 9px;
+  }
+
+  .hero-mini-divider {
+    height: 24px;
+  }
+
+  .scroll-indicator {
     display: none;
+  }
+
+  /* ── Statement ── */
+  .section-statement {
+    background: var(--white);
+  }
+
+  .statement-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .statement-headline {
+    font-size: clamp(22px, 5vw, 32px);
+  }
+
+  /* ── Solutions ── */
+  .section-solutions {
+    background: var(--white);
+    min-height: auto;
+  }
+
+  .solutions-showcase-layout {
+    flex-direction: column;
+    min-height: auto;
+    padding: var(--space-3xl) 0;
+  }
+
+  .solutions-copy-area {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .solutions-slide-num {
+    font-size: 40px;
+  }
+
+  .solutions-slide-title {
+    font-size: clamp(24px, 6vw, 36px);
+  }
+
+  .solutions-slide-desc {
+    font-size: 14px;
+    max-width: 100%;
   }
 
   .solutions-grid {
     grid-template-columns: 1fr;
   }
 
+  .card-inner {
+    min-height: 200px;
+    padding: var(--space-lg);
+  }
+
+  /* ── Stats ── */
   .stats-grid {
-    gap: var(--space-lg);
+    gap: var(--space-md);
   }
 
   .stat-item {
     flex: 0 0 100%;
-    padding: var(--space-md);
+    padding: var(--space-lg);
+  }
+
+  .stat-number, .stat-prefix {
+    font-size: clamp(36px, 8vw, 48px);
+  }
+
+  /* ── Industries ── */
+  .industry-card {
+    flex: 0 0 240px;
+    height: 320px;
+  }
+
+  .industries-track {
+    padding: 0 16px var(--space-lg);
+    gap: 12px;
+  }
+
+  .industry-overlay h3 {
+    font-size: 18px;
+  }
+
+  .industry-overlay p {
+    font-size: 12px;
+  }
+
+  /* ── Sustainability ── */
+  .sustainability-title {
+    font-size: clamp(28px, 7vw, 48px);
+    letter-spacing: -1px;
   }
 
   .sustainability-metrics {
@@ -2062,12 +2200,55 @@ button {
     gap: var(--space-lg);
   }
 
-  .sustainability-title {
-    letter-spacing: -1px;
+  .sust-metric-value {
+    font-size: 22px;
+  }
+
+  .sustainability-locations {
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+
+  .sustainability-content {
+    padding: var(--space-3xl) 0;
+  }
+
+  /* ── Trust / Testimonial ── */
+  .marquee-item {
+    font-size: 18px;
+    padding: var(--space-md) var(--space-xl);
+  }
+
+  .testimonial-card {
+    padding: var(--space-xl);
+  }
+
+  .testimonial-card blockquote {
+    font-size: 16px;
+  }
+
+  /* ── Contact ── */
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .contact-title {
+    font-size: clamp(24px, 6vw, 36px);
+  }
+
+  .contact-form-wrap {
+    padding: var(--space-lg);
   }
 
   .form-row {
     grid-template-columns: 1fr;
+  }
+
+  /* ── Footer ── */
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
   }
 
   .footer-links {
@@ -2080,17 +2261,53 @@ button {
     text-align: center;
   }
 
-  .industry-card {
-    flex: 0 0 260px;
-    height: 360px;
+  .hero-title {
+    letter-spacing: -1px;
   }
 
-  .sustainability-locations {
-    flex-wrap: wrap;
+  .hero-subtitle br {
+    display: none;
   }
 
   .hero-actions {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+/* ── Extra small screens (≤ 480px) ── */
+@media (max-width: 480px) {
+  .hero-main-title {
+    font-size: clamp(24px, 7vw, 32px);
+  }
+
+  .hero-stats-strip {
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .hero-mini-value {
+    font-size: 14px;
+  }
+
+  .hero-mini-label {
+    font-size: 8px;
+  }
+
+  .hero-mini-divider {
+    height: 20px;
+  }
+
+  .sustainability-title {
+    font-size: clamp(24px, 6vw, 36px);
+  }
+
+  .stat-number, .stat-prefix {
+    font-size: clamp(28px, 7vw, 40px);
+  }
+
+  .industry-card {
+    flex: 0 0 200px;
+    height: 280px;
   }
 }
