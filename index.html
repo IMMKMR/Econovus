@@ -16,10 +16,84 @@
 
   <!-- Styles -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
-  <script type="module" crossorigin src="./assets/index-CSH1XuPR.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-rjYnd8IN.css">
+  <script type="module" crossorigin src="./assets/index-CLhUIdvG.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-2JuBBKyf.css">
 </head>
 <body>
+
+  <!-- ═══════ INTERACTIVE INTRO GATEWAY ═══════ -->
+  <div id="intro-gateway">
+    <!-- Background -->
+    <div class="intro-bg"></div>
+    <div class="intro-grain"></div>
+    <div class="intro-vignette"></div>
+
+    <!-- Trail canvas -->
+    <canvas id="intro-trail-canvas"></canvas>
+
+    <!-- Custom cursor -->
+    <div class="intro-cursor">
+      <div class="intro-cursor-inner"></div>
+    </div>
+
+    <!-- Guide ring (SVG) -->
+    <svg class="intro-guide-ring" width="320" height="320" viewBox="0 0 320 320">
+      <defs>
+        <linearGradient id="intro-ring-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color: #c8e030; stop-opacity: 1" />
+          <stop offset="50%" style="stop-color: #a4bb12; stop-opacity: 1" />
+          <stop offset="100%" style="stop-color: #56891b; stop-opacity: 1" />
+        </linearGradient>
+        <filter id="intro-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+    </svg>
+
+    <!-- Start dot beacon -->
+    <div class="intro-start-dot" style="opacity: 0;"></div>
+
+    <!-- Prompt text -->
+    <div class="intro-prompt">
+      <div class="intro-prompt-title">Draw a Circle</div>
+      <div class="intro-prompt-subtitle">Unlock the future of packaging</div>
+    </div>
+
+    <!-- Cinematic Completion Text -->
+    <div class="intro-cinematic-text" style="pointer-events: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 90vw; max-width: 1200px; z-index: 100;">
+      <h2 style="font-family: var(--font-primary); font-size: clamp(40px, 6vw, 84px); font-weight: 300; color: var(--white); line-height: 1.05; letter-spacing: -2px; text-shadow: 0 10px 40px rgba(0,0,0,0.9);">
+        <div style="overflow: hidden; padding-bottom: 10px;">
+          <span class="cinematic-word" style="display: inline-block; opacity: 0; transform: scale(1.5); filter: blur(20px) brightness(4);">India's First</span>
+        </div>
+        <div style="overflow: hidden; padding-bottom: 10px;">
+          <strong id="cinematic-glow-word" class="cinematic-word" style="display: inline-block; font-weight: 900; color: var(--eco-lime); opacity: 0; transform: scale(1.5); filter: blur(20px) brightness(4);">carbon neutral</strong>
+        </div>
+        <div style="overflow: hidden; padding-bottom: 10px;">
+          <span class="cinematic-word" style="display: inline-block; opacity: 0; transform: scale(1.5); filter: blur(20px) brightness(4);">packaging company.</span>
+        </div>
+      </h2>
+    </div>
+
+    <!-- Completion flash -->
+    <div class="intro-flash"></div>
+
+    <!-- Logo watermark -->
+    <div class="intro-logo">
+      <img src="./assets/econovus-wordmark-CrGDDM5x.svg" alt="Econovus">
+    </div>
+
+    <!-- Skip button -->
+    <button class="intro-skip">
+      <span>Skip</span>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
 
   <!-- ═══════ 3D CANVAS ═══════ -->
   <canvas id="webgl-canvas" class="webgl-canvas"></canvas>
@@ -58,7 +132,7 @@
     <div class="hero-text-block" id="hero-text-block">
       <p class="hero-overline" id="hero-overline">
         <span class="hero-overline-dot"></span>
-        India's First Carbon-Neutral Packaging
+        India's First carbon neutral packaging company
       </p>
       <h1 class="hero-main-title" id="hero-main-title">
         <span class="hero-title-line" data-hero-anim="line">Engineering</span>
@@ -130,7 +204,7 @@
     <section id="hero" class="section section-hero" style="height: 100vh;">
       <!-- Content removed for product-focused scroll -->
 
-      <button class="scroll-indicator" id="scroll-indicator" aria-label="Scroll down">
+      <button class="scroll-indicator" id="scroll-indicator" aria-label="Scroll down" style="opacity: 0;">
         <span class="scroll-text">Scroll to explore</span>
         <div class="scroll-arrow">
           <svg width="16" height="60" viewBox="0 0 16 60" fill="none">
@@ -150,39 +224,42 @@
           <div class="solutions-copy-area">
             <p class="overline" data-anim="fade-up">Our Solutions</p>
 
-            <!-- Slide 1: Industrial Containers -->
-            <div class="solutions-slide active" id="solutions-slide-1">
-              <span class="solutions-slide-num">01</span>
-              <h2 class="solutions-slide-title">Engineered for<br><strong>every challenge.</strong></h2>
-              <p class="solutions-slide-desc">Heavy-duty industrial containers built to withstand the toughest logistics environments. Designed for multi-trip use, reducing waste and cost.</p>
-              <div class="solutions-slide-tags">
-                <span class="solutions-tag">Multi-Trip</span>
-                <span class="solutions-tag">1 Ton+ Capacity</span>
-                <span class="solutions-tag">Foldable</span>
+            <!-- Slides Wrapper -->
+            <div class="solutions-slides-wrapper" style="position: relative; min-height: 280px;">
+              <!-- Slide 1: Industrial Containers -->
+              <div class="solutions-slide active" id="solutions-slide-1">
+                <span class="solutions-slide-num">01</span>
+                <h2 class="solutions-slide-title">Engineered for<br><strong>every challenge.</strong></h2>
+                <p class="solutions-slide-desc">Heavy-duty industrial containers built to withstand the toughest logistics environments. Designed for multi-trip use, reducing waste and cost.</p>
+                <div class="solutions-slide-tags">
+                  <span class="solutions-tag">Multi-Trip</span>
+                  <span class="solutions-tag">1 Ton+ Capacity</span>
+                  <span class="solutions-tag">Foldable</span>
+                </div>
               </div>
-            </div>
 
-            <!-- Slide 2: Export Packaging -->
-            <div class="solutions-slide" id="solutions-slide-2">
-              <span class="solutions-slide-num">02</span>
-              <h2 class="solutions-slide-title">Export-ready<br><strong>packaging systems.</strong></h2>
-              <p class="solutions-slide-desc">ISPM-15 compliant packaging engineered for safe global transit. Custom-fit solutions that protect high-value machinery and components.</p>
-              <div class="solutions-slide-tags">
-                <span class="solutions-tag">ISPM-15</span>
-                <span class="solutions-tag">Custom-Fit</span>
-                <span class="solutions-tag">Global Transit</span>
+              <!-- Slide 2: Export Packaging -->
+              <div class="solutions-slide" id="solutions-slide-2">
+                <span class="solutions-slide-num">02</span>
+                <h2 class="solutions-slide-title">Export-ready<br><strong>packaging systems.</strong></h2>
+                <p class="solutions-slide-desc">ISPM-15 compliant packaging engineered for safe global transit. Custom-fit solutions that protect high-value machinery and components.</p>
+                <div class="solutions-slide-tags">
+                  <span class="solutions-tag">ISPM-15</span>
+                  <span class="solutions-tag">Custom-Fit</span>
+                  <span class="solutions-tag">Global Transit</span>
+                </div>
               </div>
-            </div>
 
-            <!-- Slide 3: Returnable Packaging -->
-            <div class="solutions-slide" id="solutions-slide-3">
-              <span class="solutions-slide-num">03</span>
-              <h2 class="solutions-slide-title">Sustainable<br><strong>returnable systems.</strong></h2>
-              <p class="solutions-slide-desc">Closed-loop returnable packaging that eliminates single-use waste. Engineered for durability across hundreds of shipping cycles.</p>
-              <div class="solutions-slide-tags">
-                <span class="solutions-tag">Closed-Loop</span>
-                <span class="solutions-tag">Zero Waste</span>
-                <span class="solutions-tag">500+ Cycles</span>
+              <!-- Slide 3: Returnable Packaging -->
+              <div class="solutions-slide" id="solutions-slide-3">
+                <span class="solutions-slide-num">03</span>
+                <h2 class="solutions-slide-title">Sustainable<br><strong>returnable systems.</strong></h2>
+                <p class="solutions-slide-desc">Closed-loop returnable packaging that eliminates single-use waste. Engineered for durability across hundreds of shipping cycles.</p>
+                <div class="solutions-slide-tags">
+                  <span class="solutions-tag">Closed-Loop</span>
+                  <span class="solutions-tag">Zero Waste</span>
+                  <span class="solutions-tag">500+ Cycles</span>
+                </div>
               </div>
             </div>
 
