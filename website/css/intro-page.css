@@ -292,7 +292,8 @@
 .intro-logo {
   position: absolute;
   top: 40px;
-  left: 40px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 5;
   opacity: 0;
   pointer-events: none;
@@ -331,7 +332,7 @@
 
   .intro-logo {
     top: 24px;
-    left: 24px;
+    /* 'left: 50%' and 'transform' cascade from desktop, keeping it centered */
   }
 
   .intro-cursor {

@@ -2461,11 +2461,10 @@ button {
 
 .chatbot-suggestions {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
     padding: 0 20px 15px 20px;
-    overflow-x: auto;
     background-color: #f8fafc;
-    scrollbar-width: none;
 }
 .chatbot-suggestions::-webkit-scrollbar {
     display: none;
@@ -2477,7 +2476,8 @@ button {
     padding: 8px 14px;
     border-radius: 20px;
     font-size: 13.5px;
-    white-space: nowrap;
+    white-space: normal;
+    text-align: left;
     cursor: pointer;
     transition: all 0.2s;
     box-shadow: 0 2px 5px rgba(0,0,0,0.02);
