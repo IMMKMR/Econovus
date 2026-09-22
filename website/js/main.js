@@ -692,11 +692,94 @@ function initMainSite() {
   initScrollIndicator();
   initMagneticButtons();
   initContactForm();
+  initChatbot();
 
   // Init particles after a short delay (optional now that we have 3D, but can keep as an overlay)
   // setTimeout(() => {
   //   initParticles('hero-particles');
   // }, 100);
+}
+
+function initChatbot() {
+    const toggleBtn = document.getElementById('toggleChat');
+    const closeBtn = document.getElementById('closeChat');
+    const widget = document.getElementById('chatbotWidget');
+    const sendBtn = document.getElementById('sendChat');
+    const inputField = document.getElementById('chatbotInput');
+    const messagesContainer = document.getElementById('chatbotMessages');
+    if (!toggleBtn || !widget) return;
+
+    // Pre-defined dummy responses based on the report
+    const knowledgeBase = [
+        "Econovus leverages advanced materials to provide sustainable packaging.",
+        "Our future website will feature 3D animations, a custom UI/UX, and an AI Chatbot (like me!)",
+        "The core tech stack includes Next.js, Tailwind CSS, GSAP, and Node.js for backend microservices.",
+        "Yes, the new website will have 12 main pages including Projects, Sustainability, and a Blog.",
+        "The chatbot is powered by LangChain and RAG, integrating directly with our knowledge base.",
+        "Would you like to speak to one of our packaging engineers? (This would usually open a booking form!)"
+    ];
+
+    function toggleChat() {
+        widget.classList.toggle('active');
+        if (widget.classList.contains('active')) {
+            setTimeout(() => inputField.focus(), 300);
+        }
+    }
+
+    toggleBtn.addEventListener('click', toggleChat);
+    closeBtn.addEventListener('click', toggleChat);
+
+    function addMessage(text, isUser) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
+        msgDiv.textContent = text;
+        messagesContainer.appendChild(msgDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message ai-message typing';
+        typingDiv.id = 'typingIndicator';
+        typingDiv.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+        messagesContainer.appendChild(typingDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        return typingDiv;
+    }
+
+    function handleSend() {
+        const text = inputField.value.trim();
+        if (!text) return;
+
+        // Add user message
+        addMessage(text, true);
+        inputField.value = '';
+
+        // Simulate AI typing and response
+        setTimeout(() => {
+            const typingIndicator = showTypingIndicator();
+
+            setTimeout(() => {
+                // Remove typing indicator
+                if (typingIndicator.parentNode) {
+                    typingIndicator.parentNode.removeChild(typingIndicator);
+                }
+                
+                // Pick random response from knowledge base
+                const reply = knowledgeBase[Math.floor(Math.random() * knowledgeBase.length)];
+                addMessage(reply, false);
+            }, 1500); // 1.5s typing delay
+        }, 400); // 0.4s initial delay
+    }
+
+    sendBtn.addEventListener('click', handleSend);
+    
+    inputField.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSend();
+        }
+    });
 }
 
 // ── Global Scroll Lock Helper ──
