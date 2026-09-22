@@ -2459,6 +2459,35 @@ button {
     border-bottom-right-radius: 4px;
 }
 
+.chatbot-suggestions {
+    display: flex;
+    gap: 8px;
+    padding: 0 20px 15px 20px;
+    overflow-x: auto;
+    background-color: #f8fafc;
+    scrollbar-width: none;
+}
+.chatbot-suggestions::-webkit-scrollbar {
+    display: none;
+}
+.suggestion-chip {
+    background: white;
+    border: 1px solid rgba(86, 137, 27, 0.3);
+    color: var(--eco-forest);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13.5px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+.suggestion-chip:hover {
+    background: var(--eco-mid);
+    color: white;
+    border-color: var(--eco-mid);
+}
+
 .chatbot-input-area {
     padding: 16px 20px;
     background: white;

@@ -709,15 +709,73 @@ function initChatbot() {
     const messagesContainer = document.getElementById('chatbotMessages');
     if (!toggleBtn || !widget) return;
 
-    // Pre-defined dummy responses based on the report
-    const knowledgeBase = [
-        "Econovus leverages advanced materials to provide sustainable packaging.",
-        "Our future website will feature 3D animations, a custom UI/UX, and an AI Chatbot (like me!)",
-        "The core tech stack includes Next.js, Tailwind CSS, GSAP, and Node.js for backend microservices.",
-        "Yes, the new website will have 12 main pages including Projects, Sustainability, and a Blog.",
-        "The chatbot is powered by LangChain and RAG, integrating directly with our knowledge base.",
-        "Would you like to speak to one of our packaging engineers? (This would usually open a booking form!)"
-    ];
+    // Enhanced Knowledge Base for simple intent matching
+    const knowledgeBase = {
+        greetings: {
+            keywords: ['hi', 'hello', 'hey', 'greetings', 'morning', 'afternoon', 'sup'],
+            responses: [
+                "Hello there! How can I help you with Econovus packaging today?",
+                "Hi! I'm the Econovus AI. What would you like to know about our sustainable solutions?"
+            ]
+        },
+        contact: {
+            keywords: ['contact', 'email', 'phone', 'call', 'talk', 'engineer', 'booking', 'meet', 'reach'],
+            responses: [
+                "You can reach us at info@econovus.co.in. Alternatively, fill out the contact form at the bottom of the page!",
+                "Our packaging engineers are ready to help. Please use the contact section below to schedule a detailed assessment."
+            ]
+        },
+        sustainability: {
+            keywords: ['sustainable', 'sustainability', 'carbon', 'green', 'environment', 'eco', 'footprint', 'recycle', 'nature'],
+            responses: [
+                "We are proud to be India's First Carbon-Neutral Packaging Company! We help reduce carbon footprints by up to 93%.",
+                "Our solutions use 100% sustainable materials and ensure zero waste to landfill."
+            ]
+        },
+        products: {
+            keywords: ['products', 'packaging', 'box', 'heavy', 'export', 'solution', 'container', 'industrial', 'design'],
+            responses: [
+                "We specialize in heavy-duty industrial containers, ISPM-15 compliant export packaging, and closed-loop returnable systems.",
+                "Our engineered packaging can handle 1 Ton+ capacity while being fully foldable and designed for multi-trip use."
+            ]
+        },
+        pricing: {
+            keywords: ['price', 'cost', 'quote', 'estimate', 'pricing', 'cheap', 'expensive', 'money'],
+            responses: [
+                "Our engineered solutions typically offer up to 15% cost savings for our clients. For a customized quote, please reach out via our contact form!"
+            ]
+        },
+        affirmative: {
+            keywords: ['yes', 'yeah', 'sure', 'ok', 'okay', 'please', 'do it', 'yup'],
+            responses: [
+                "Great! Let me know if you have any specific questions about our process.",
+                "Excellent. Feel free to explore the site or ask me anything else!"
+            ]
+        },
+        fallback: {
+            responses: [
+                "I'm still learning! Could you rephrase that? Try asking about our sustainability, products, or contact info.",
+                "That's an interesting question! While I'm just an AI, our human engineers would love to answer that for you. Use the contact form below!",
+                "I might need a bit more context. Are you looking for information on our export packaging, carbon-neutral approach, or something else?"
+            ]
+        }
+    };
+
+    function getBotResponse(userMessage) {
+        const lowerMsg = userMessage.toLowerCase();
+        
+        for (const intent in knowledgeBase) {
+            if (intent === 'fallback') continue;
+            const data = knowledgeBase[intent];
+            // Check if any keyword matches as a substring
+            const match = data.keywords.some(kw => lowerMsg.includes(kw));
+            if (match) {
+                return data.responses[Math.floor(Math.random() * data.responses.length)];
+            }
+        }
+        
+        return knowledgeBase.fallback.responses[Math.floor(Math.random() * knowledgeBase.fallback.responses.length)];
+    }
 
     function toggleChat() {
         widget.classList.toggle('active');
@@ -765,12 +823,20 @@ function initChatbot() {
                     typingIndicator.parentNode.removeChild(typingIndicator);
                 }
                 
-                // Pick random response from knowledge base
-                const reply = knowledgeBase[Math.floor(Math.random() * knowledgeBase.length)];
+                // Get smart contextual response
+                const reply = getBotResponse(text);
                 addMessage(reply, false);
-            }, 1500); // 1.5s typing delay
+            }, 1000 + Math.random() * 1000); // 1s - 2s typing delay for realism
         }, 400); // 0.4s initial delay
     }
+
+    const suggestions = document.querySelectorAll('.suggestion-chip');
+    suggestions.forEach(chip => {
+        chip.addEventListener('click', () => {
+            inputField.value = chip.textContent;
+            handleSend();
+        });
+    });
 
     sendBtn.addEventListener('click', handleSend);
     
