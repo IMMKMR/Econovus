@@ -5,8 +5,8 @@
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { initParticles } from './particles.js';
-import { initCounters } from './counters.js';
+// import { initParticles } from './particles.js';
+// import { initCounters } from './counters.js';
 import { initThreeScene } from './three-scene.js';
 import { initIntroPage } from './intro-page.js';
 
@@ -687,16 +687,16 @@ function initMainSite() {
   initScrollAnimations();
   initCardTilt();
   initStatsAnimations();
-  initCounters();
+  // initCounters();
   initSustainabilityParallax();
   initScrollIndicator();
   initMagneticButtons();
   initContactForm();
 
   // Init particles after a short delay (optional now that we have 3D, but can keep as an overlay)
-  setTimeout(() => {
-    initParticles('hero-particles');
-  }, 100);
+  // setTimeout(() => {
+  //   initParticles('hero-particles');
+  // }, 100);
 }
 
 // ── Global Scroll Lock Helper ──

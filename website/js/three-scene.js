@@ -391,15 +391,15 @@ export function initThreeScene() {
     // Box enters during the grand transition dolly-in
     tlMaster.set(showcaseClone0, { visible: true }, 0.4);
     tlMaster.fromTo(showcaseClone0.position, 
-      { x: -15, y: -15, z: 7, immediateRender: false },
+      { x: -2, y: -5, z: 12, immediateRender: false }, // enters from front-bottom
       { x: -2, y: 1.2, z: 7, duration: 0.6, ease: 'power2.out' }, 
     0.4);
     tlMaster.fromTo(showcaseClone0.rotation, 
-      { y: 0, immediateRender: false },
-      { y: Math.PI * 0.9, duration: 1.2, ease: 'none' }, 
+      { y: 0.3, immediateRender: false },
+      { y: -0.3, duration: 1.2, ease: 'none' }, 
     1.0);
-    // Slide 1 exits to BOTTOM-LEFT
-    tlMaster.to(showcaseClone0.position, { x: -15, y: -15, z: 7, duration: 0.6, ease: 'power2.in' }, 1.6);
+    // Slide 1 exits back to front-bottom
+    tlMaster.to(showcaseClone0.position, { x: -2, y: -5, z: 12, duration: 0.6, ease: 'power2.in' }, 1.6);
     tlMaster.set(showcaseClone0, { visible: false }, 2.2);
     
     // Slide 1 text exits
@@ -413,16 +413,16 @@ export function initThreeScene() {
     // Slide 2 (2.2 → 3.4): showcaseClone1 enters from BOTTOM-LEFT
     tlMaster.set(showcaseClone1, { visible: true }, 2.2);
     tlMaster.fromTo(showcaseClone1.position, 
-      { x: -15, y: -15, z: 7, immediateRender: false },
+      { x: -2, y: -5, z: 12, immediateRender: false },
       { x: -2, y: 1.2, z: 7, duration: 0.6, ease: 'power2.out' }, 
     2.2);
     tlMaster.fromTo(showcaseClone1.rotation, 
-      { y: Math.PI * 1.5, immediateRender: false },
-      { y: Math.PI * 1.0, duration: 1.2, ease: 'none' }, 
+      { y: -0.3, immediateRender: false },
+      { y: 0.3, duration: 1.2, ease: 'none' }, 
     2.2);
     
-    // Slide 2 exits to BOTTOM-LEFT
-    tlMaster.to(showcaseClone1.position, { x: -15, y: -15, z: 7, duration: 0.6, ease: 'power2.in' }, 3.4);
+    // Slide 2 exits back to front-bottom
+    tlMaster.to(showcaseClone1.position, { x: -2, y: -5, z: 12, duration: 0.6, ease: 'power2.in' }, 3.4);
     tlMaster.set(showcaseClone1, { visible: false }, 4.0);
 
     // Slide 2 text exits
@@ -436,12 +436,12 @@ export function initThreeScene() {
     // Slide 3 (3.4 → 4.6): showcaseClone2 enters from BOTTOM-LEFT
     tlMaster.set(showcaseClone2, { visible: true }, 3.4);
     tlMaster.fromTo(showcaseClone2.position, 
-      { x: -15, y: -15, z: 7, immediateRender: false },
+      { x: -2, y: -5, z: 12, immediateRender: false },
       { x: -2, y: 1.2, z: 7, duration: 0.6, ease: 'power2.out' }, 
     3.4);
     tlMaster.fromTo(showcaseClone2.rotation, 
-      { y: Math.PI * 0.2, immediateRender: false },
-      { y: Math.PI * 0.8, duration: 1.2, ease: 'none' }, 
+      { y: 0.3, immediateRender: false },
+      { y: -0.3, duration: 1.2, ease: 'none' }, 
     3.4);
 
     // ─── PIN SOLUTIONS SECTION ───
