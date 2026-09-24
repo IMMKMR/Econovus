@@ -41,8 +41,8 @@ export function initThreeScene() {
 
   // ── Camera ──
   const sizes = { width: window.innerWidth, height: window.innerHeight };
-  // Narrow FOV for isometric feel
-  const getFov = (width) => width < 768 ? 45 : (width < 1024 ? 35 : 25);
+  // Narrow FOV for isometric feel, adjusted to prevent overlapping with text
+  const getFov = (width) => width < 768 ? 48 : (width < 1024 ? 38 : (width < 1600 ? 32 : 28));
   const camera = new THREE.PerspectiveCamera(getFov(sizes.width), sizes.width / sizes.height, 0.1, 1000);
   scene.add(camera);
 
