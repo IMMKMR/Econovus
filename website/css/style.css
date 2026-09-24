@@ -1660,6 +1660,20 @@ button {
   bottom: 140px;
   left: 40px;
   max-width: 600px;
+  z-index: 2;
+}
+
+.hero-text-block::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  bottom: -80px;
+  left: -80px;
+  right: -150px;
+  background: linear-gradient(to right, rgba(244,244,245, 1) 0%, rgba(244,244,245, 0.85) 50%, rgba(244,244,245, 0) 100%);
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(15px);
 }
 
 .hero-overline {

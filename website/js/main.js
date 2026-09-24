@@ -214,6 +214,12 @@ function initHeroOverlay() {
     duration: 1,
   }, 0);
 
+  // Fade out the entire text block to cleanly hide the white fade pseudo-element
+  exitTl.to('#hero-text-block', {
+    opacity: 0,
+    duration: 1,
+  }, 0);
+
   // Title lines fly out in different directions
   exitTl.to('.hero-title-line:nth-child(1)', {
     opacity: 0,
@@ -295,6 +301,7 @@ function initHotspots() {
     const overlay = document.getElementById('hero-overlay');
     if (overlay) {
       gsap.to('#hero-brand', { opacity: 0, y: -30, duration: 0.6, ease: 'power2.in' });
+      gsap.to('#hero-text-block', { opacity: 0, duration: 0.6, ease: 'power2.in' });
       gsap.to('#hero-overline', { opacity: 0, x: -40, duration: 0.5, ease: 'power2.in' });
       gsap.to('.hero-title-line', { opacity: 0, y: -30, duration: 0.5, stagger: 0.05, ease: 'power2.in' });
       gsap.to('#hero-description', { opacity: 0, y: 20, duration: 0.4, ease: 'power2.in' });
