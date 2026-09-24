@@ -1666,7 +1666,7 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -1931,19 +1931,12 @@ button {
 
 /* ═══════ RESPONSIVE ═══════ */
 @media (max-width: 1440px) {
-  html {
-    zoom: 0.9; /* Slight zoom out for smaller desktops/laptops to prevent overlap */
-  }
   .hero-text-block {
     max-width: 500px;
   }
 }
 
 @media (max-width: 1024px) {
-  html {
-    zoom: 0.85; /* Zoom out for tablets and small landscape screens */
-  }
-
   .solutions-copy-area {
     width: 55%;
   }
@@ -2016,10 +2009,6 @@ button {
 }
 
 @media (max-width: 768px) {
-  html {
-    zoom: 0.8; /* Zoom out overall view on mobile screens */
-  }
-
   :root {
     --space-xl: 24px;
     --space-2xl: 48px;
