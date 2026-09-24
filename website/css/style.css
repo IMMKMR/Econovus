@@ -1661,6 +1661,7 @@ button {
   left: 40px;
   max-width: 600px;
   z-index: 2;
+  opacity: 0;
 }
 
 .hero-text-block::before {

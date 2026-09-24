@@ -127,6 +127,12 @@ function initHeroOverlay() {
     duration: 0.8,
   }, 0.2);
 
+  // Fade in the container (with the white fade)
+  entranceTl.to('#hero-text-block', {
+    opacity: 1,
+    duration: 1,
+  }, 0.4);
+
   // Overline
   entranceTl.to('#hero-overline', {
     opacity: 1,
