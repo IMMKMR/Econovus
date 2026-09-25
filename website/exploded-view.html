@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Econovus — Deconstructed View</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #ffffff; overflow: hidden; cursor: default; }
+
+    #webgl-canvas {
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh; z-index: 0;
+    }
+
+    #preloader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #ffffff;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 20px;
+      transition: opacity 0.8s ease;
+    }
+    #preloader.hide { display: none; }
+
+    .spinner {
+      width: 32px; height: 32px;
+      border: 2px solid #e5e7eb;
+      border-top-color: #a4bb12;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .preloader-pct {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 2px; color: #9ca3af;
+    }
+
+    /* Part tooltip */
+    #tooltip {
+      position: fixed; z-index: 100;
+      pointer-events: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: #ffffff;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 6px 14px;
+      border-radius: 100px;
+      opacity: 0;
+      transform: translate(-50%, -120%);
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+    }
+    #tooltip.visible { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <div id="preloader">
+    <div class="spinner"></div>
+    <div class="preloader-pct" id="preloader-pct">0%</div>
+  </div>
+
+  <canvas id="webgl-canvas"></canvas>
+  <div id="tooltip"></div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+    import gsap from 'gsap';
+
+    // ── Scene ──
+    const canvas = document.getElementById('webgl-canvas');
+    const tooltip = document.getElementById('tooltip');
+    const sizes = { width: window.innerWidth, height: window.innerHeight };
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xffffff);
+
+    const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 500);
+    camera.position.set(6, 4, 9);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setSize(sizes.width, sizes.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.4;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    // ── Controls ──
+    const controls = new OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.04;
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.4;
+    controls.target.set(0, 1.5, 0);
+    controls.maxPolarAngle = Math.PI / 2 + 0.1;
+    controls.minPolarAngle = 0.3;
+
+    // ── Lighting ──
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xf0f0f0, 0.5);
+    hemiLight.position.set(0, 20, 0);
+    scene.add(hemiLight);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.5);
+    keyLight.position.set(10, 15, 10);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.set(2048, 2048);
+    keyLight.shadow.camera.near = 0.5;
+    keyLight.shadow.camera.far = 60;
+    [-12, 12].forEach(v => {
+      keyLight.shadow.camera.left = -12;
+      keyLight.shadow.camera.right = 12;
+      keyLight.shadow.camera.top = 12;
+      keyLight.shadow.camera.bottom = -12;
+    });
+    keyLight.shadow.bias = -0.0002;
+    keyLight.shadow.normalBias = 0.02;
+    scene.add(keyLight);
+
+    const fillLight = new THREE.DirectionalLight(0xe8ecf0, 1.2);
+    fillLight.position.set(-8, 8, -6);
+    scene.add(fillLight);
+
+    const backLight = new THREE.DirectionalLight(0xf5f5f5, 0.8);
+    backLight.position.set(0, 5, -12);
+    scene.add(backLight);
+
+    // ── Shadow plane ──
+    const shadowPlane = new THREE.Mesh(
+      new THREE.PlaneGeometry(40, 40),
+      new THREE.ShadowMaterial({ opacity: 0.06 })
+    );
+    shadowPlane.rotation.x = -Math.PI / 2;
+    shadowPlane.position.y = 0;
+    shadowPlane.receiveShadow = true;
+    scene.add(shadowPlane);
+
+    // ── State ──
+    let containerModel = null;
+    let rackGroup = null;
+    let rackParts = [];          // { mesh, originalPos, explodeDir, label }
+    let modelsLoaded = 0;
+    let isExploded = false;      // current visual state
+    let explodeTl = null;        // the main timeline
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    let hoveredPart = null;
+    let originalMaterials = new Map();  // mesh → original emissive color
+
+    const loader = new GLTFLoader();
+    const basePath = import.meta.env.BASE_URL || '/';
+
+    // ── Fit & center a model, ensuring it sits ON the ground (y=0) ──
+    function fitModel(model, targetSize) {
+      const box = new THREE.Box3().setFromObject(model);
+      const size = box.getSize(new THREE.Vector3());
+      const s = targetSize / Math.max(size.x, size.y, size.z);
+      model.scale.set(s, s, s);
+
+      // Center horizontally, sit on ground
+      const boxAfter = new THREE.Box3().setFromObject(model);
+      const center = boxAfter.getCenter(new THREE.Vector3());
+      model.position.x -= center.x;
+      model.position.z -= center.z;
+      model.position.y -= boxAfter.min.y; // bottom at y=0
+    }
+
+    // ── Load Container ──
+    loader.load(`${basePath}models/industrial-container.glb`, (gltf) => {
+      containerModel = gltf.scene;
+      containerModel.traverse((c) => {
+        if (c.isMesh) {
+          c.castShadow = true;
+          c.receiveShadow = true;
+          if (c.material) {
+            c.material = c.material.clone();
+            c.material.transparent = true;
+            c.material.opacity = 1;
+            c.material.metalness = 0.4;
+            c.material.roughness = 0.45;
+          }
+        }
+      });
+      fitModel(containerModel, 4);
+      scene.add(containerModel);
+      onModelReady();
+    },
+    (xhr) => {
+      const pct = Math.round((xhr.loaded / (xhr.total || 1)) * 50);
+      document.getElementById('preloader-pct').textContent = `${pct}%`;
+    });
+
+    // ── Load Wall Panel (deconstructed parts) ──
+    loader.load(`${basePath}models/modular-wall-panel.glb`, (gltf) => {
+      rackGroup = new THREE.Group();
+      const model = gltf.scene;
+
+      model.traverse((c) => {
+        if (c.isMesh && c.material) {
+          c.castShadow = true;
+          c.receiveShadow = true;
+          c.material = c.material.clone();
+          c.material.transparent = true;
+          c.material.opacity = 0;
+          c.material.metalness = 0.5;
+          c.material.roughness = 0.4;
+        }
+      });
+
+      fitModel(model, 4);
+      rackGroup.add(model);
+      rackGroup.visible = false;
+      scene.add(rackGroup);
+      onModelReady();
+    },
+    (xhr) => {
+      const pct = 50 + Math.round((xhr.loaded / (xhr.total || 1)) * 50);
+      document.getElementById('preloader-pct').textContent = `${pct}%`;
+    });
+
+    // ═══════════════════════════════════════
+    //  SETUP AFTER BOTH MODELS LOAD
+    // ═══════════════════════════════════════
+    function onModelReady() {
+      modelsLoaded++;
+      if (modelsLoaded < 2) return;
+
+      // ── Match rack size to container ──
+      const containerBB = new THREE.Box3().setFromObject(containerModel);
+      const containerSize = containerBB.getSize(new THREE.Vector3());
+      const containerCenter = containerBB.getCenter(new THREE.Vector3());
+
+      const rackBB = new THREE.Box3().setFromObject(rackGroup);
+      const rackSize = rackBB.getSize(new THREE.Vector3());
+
+      const scale = containerSize.y / rackSize.y;
+      rackGroup.scale.multiplyScalar(scale);
+
+      // Re-center rack to match container position
+      const rackBBNew = new THREE.Box3().setFromObject(rackGroup);
+      const rackCenterNew = rackBBNew.getCenter(new THREE.Vector3());
+      rackGroup.position.x += containerCenter.x - rackCenterNew.x;
+      rackGroup.position.z += containerCenter.z - rackCenterNew.z;
+      rackGroup.position.y -= rackBBNew.min.y; // sit on ground
+
+      // ── Collect parts with proper explode directions ──
+      const modelCenter = new THREE.Vector3();
+      new THREE.Box3().setFromObject(rackGroup).getCenter(modelCenter);
+
+      const partLabels = [
+        'Top Lid', 'Side Wall L', 'Side Wall R', 'Base Pallet',
+        'Front Panel', 'Rear Panel', 'Corner Post', 'Hinge Bracket',
+        'Lock Clip', 'Collar Frame', 'Support Rail', 'Cross Beam',
+        'Bottom Frame'
+      ];
+
+      let partIndex = 0;
+      rackGroup.traverse((child) => {
+        if (child.isMesh) {
+          const partBox = new THREE.Box3().setFromObject(child);
+          const partCenter = partBox.getCenter(new THREE.Vector3());
+
+          const dir = new THREE.Vector3().subVectors(partCenter, modelCenter);
+          if (dir.length() < 0.05) {
+            dir.set(
+              (Math.random() - 0.5) * 2,
+              partCenter.y > modelCenter.y ? 1 : -0.5,
+              (Math.random() - 0.5) * 2
+            );
+          }
+          dir.normalize();
+
+          // Ensure no part goes below ground: bias upward
+          if (dir.y < -0.2) dir.y = -0.15;
+          dir.normalize();
+
+          // Store original emissive for hover highlight
+          if (child.material) {
+            originalMaterials.set(child, child.material.emissive ? child.material.emissive.clone() : new THREE.Color(0, 0, 0));
+          }
+
+          rackParts.push({
+            mesh: child,
+            originalPos: child.position.clone(),
+            explodeDir: dir,
+            label: partLabels[partIndex % partLabels.length],
+          });
+          partIndex++;
+        }
+      });
+
+      // Sort bottom-to-top for clean stagger
+      rackParts.sort((a, b) => {
+        const aY = new THREE.Box3().setFromObject(a.mesh).getCenter(new THREE.Vector3()).y;
+        const bY = new THREE.Box3().setFromObject(b.mesh).getCenter(new THREE.Vector3()).y;
+        return aY - bY;
+      });
+
+      buildTimeline();
+
+      // Hide preloader
+      gsap.to('#preloader', {
+        opacity: 0, duration: 0.8, ease: 'power2.out',
+        onComplete: () => document.getElementById('preloader').classList.add('hide')
+      });
+    }
+
+    // ═══════════════════════════════════════
+    //  BUILD THE MASTER TIMELINE
+    // ═══════════════════════════════════════
+    function buildTimeline() {
+      const containerMeshes = [];
+      containerModel.traverse((c) => { if (c.isMesh) containerMeshes.push(c); });
+
+      const savedScale = containerModel.scale.clone();
+      const SEPARATE = 0.06; // extremely subtle separation to maintain box shape
+      const N = rackParts.length;
+
+      // Paused timeline — play on hover, reverse on leave
+      explodeTl = gsap.timeline({ paused: true, defaults: { ease: 'power2.inOut' } });
+
+      // ── Phase 1 (0s → 0.6s): Container fades out smoothly ──
+      containerMeshes.forEach((mesh) => {
+        explodeTl.to(mesh.material, { opacity: 0, duration: 0.5 }, 0.05);
+      });
+
+      explodeTl.to(containerModel.scale, {
+        x: savedScale.x * 0.97,
+        y: savedScale.y * 0.97,
+        z: savedScale.z * 0.97,
+        duration: 0.5,
+      }, 0);
+
+      // ── Phase 2 (0.3s → 0.8s): Parts appear ──
+      explodeTl.call(() => { rackGroup.visible = true; }, [], 0.25);
+
+      rackParts.forEach((part, i) => {
+        const delay = 0.3 + (i / N) * 0.3;
+        explodeTl.to(part.mesh.material, { opacity: 1, duration: 0.35 }, delay);
+      });
+
+      explodeTl.call(() => { containerModel.visible = false; }, [], 0.65);
+
+      // ── Phase 3 (0.6s → 1.4s): Gentle separation — parts drift apart ──
+      rackParts.forEach((part, i) => {
+        const delay = 0.6 + (i / N) * 0.3;
+
+        explodeTl.to(part.mesh.position, {
+          x: part.originalPos.x + part.explodeDir.x * SEPARATE,
+          y: Math.max(0.15, part.originalPos.y + part.explodeDir.y * SEPARATE),
+          z: part.originalPos.z + part.explodeDir.z * SEPARATE,
+          duration: 0.7,
+          ease: 'power2.out',
+        }, delay);
+      });
+
+      // Slow rotation
+      explodeTl.to(controls, { autoRotateSpeed: 0.15, duration: 0.8 }, 0.4);
+
+      // On full reverse: reset everything
+      explodeTl.eventCallback('onReverseComplete', () => {
+        containerModel.visible = true;
+        rackGroup.visible = false;
+        isExploded = false;
+        controls.autoRotateSpeed = 0.4;
+
+        containerMeshes.forEach(m => { m.material.opacity = 1; });
+        containerModel.scale.copy(savedScale);
+
+        rackParts.forEach(part => {
+          part.mesh.material.opacity = 0;
+          part.mesh.position.copy(part.originalPos);
+        });
+
+        stopFloat();
+      });
+
+      explodeTl.eventCallback('onComplete', () => {
+        startFloat();
+      });
+    }
+
+    // ═══════════════════════════════════════
+    //  FLOATING ANIMATION (idle bob per part)
+    // ═══════════════════════════════════════
+    let floatTweens = [];
+
+    function startFloat() {
+      stopFloat();
+      rackParts.forEach((part, i) => {
+        const baseY = part.mesh.position.y;
+        const speed = 1.5 + Math.random() * 0.8;
+        const amplitude = 0.03 + Math.random() * 0.02; // very gentle float
+        const phase = Math.random() * Math.PI * 2;
+
+        const tween = gsap.to(part.mesh.position, {
+          y: baseY + amplitude,
+          duration: speed,
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1,
+          delay: phase * 0.1,
+        });
+        floatTweens.push(tween);
+      });
+    }
+
+    function stopFloat() {
+      floatTweens.forEach(t => t.kill());
+      floatTweens = [];
+    }
+
+    // ═══════════════════════════════════════
+    //  HOVER INTERACTION
+    // ═══════════════════════════════════════
+    let isHoveringModel = false;
+
+    canvas.addEventListener('mousemove', (e) => {
+      mouse.x = (e.clientX / sizes.width) * 2 - 1;
+      mouse.y = -(e.clientY / sizes.height) * 2 + 1;
+
+      tooltip.style.left = `${e.clientX}px`;
+      tooltip.style.top = `${e.clientY}px`;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      isHoveringModel = false;
+      if (isExploded && explodeTl) {
+        stopFloat();
+        explodeTl.timeScale(2.5).reverse(); // 2.5x speed when joining back together
+      }
+      clearPartHighlight();
+      tooltip.classList.remove('visible');
+      canvas.style.cursor = 'default';
+    });
+
+    function checkHover() {
+      raycaster.setFromCamera(mouse, camera);
+
+      if (!isExploded) {
+        // Hover on the assembled container → separate
+        if (containerModel && containerModel.visible) {
+          const hits = raycaster.intersectObject(containerModel, true);
+          if (hits.length > 0) {
+            if (!isHoveringModel) {
+              isHoveringModel = true;
+              isExploded = true;
+              canvas.style.cursor = 'grab';
+              if (explodeTl) explodeTl.timeScale(1).play(); // normal speed when exploding
+            }
+          }
+        }
+      } else {
+        // Parts are separated — highlight individual parts on hover
+        if (rackGroup && rackGroup.visible) {
+          const partMeshes = rackParts.map(p => p.mesh);
+          const hits = raycaster.intersectObjects(partMeshes, false);
+
+          if (hits.length > 0) {
+            const hitMesh = hits[0].object;
+            const part = rackParts.find(p => p.mesh === hitMesh);
+
+            if (part && hoveredPart !== hitMesh) {
+              clearPartHighlight();
+              hoveredPart = hitMesh;
+
+              // Green glow
+              if (hitMesh.material) {
+                hitMesh.material.emissive = new THREE.Color(0xa4bb12);
+                hitMesh.material.emissiveIntensity = 0.12;
+              }
+
+              // Very subtle scale, no position shift to avoid hover jitter
+              gsap.to(hitMesh.scale, {
+                x: 1.03, y: 1.03, z: 1.03,
+                duration: 0.2, ease: 'power2.out',
+              });
+
+              tooltip.textContent = part.label;
+              tooltip.classList.add('visible');
+              canvas.style.cursor = 'pointer';
+            }
+          } else {
+            if (hoveredPart) {
+              clearPartHighlight();
+              tooltip.classList.remove('visible');
+              canvas.style.cursor = 'grab';
+            }
+          }
+        }
+      }
+    }
+
+    function clearPartHighlight() {
+      if (hoveredPart) {
+        const origEmissive = originalMaterials.get(hoveredPart);
+        if (hoveredPart.material && origEmissive) {
+          hoveredPart.material.emissive.copy(origEmissive);
+          hoveredPart.material.emissiveIntensity = 0;
+        }
+
+        gsap.to(hoveredPart.scale, {
+          x: 1, y: 1, z: 1,
+          duration: 0.2, ease: 'power2.out',
+        });
+        hoveredPart = null;
+      }
+    }
+
+    // ═══════════════════════════════════════
+    //  RENDER LOOP
+    // ═══════════════════════════════════════
+    function tick() {
+      controls.update();
+      checkHover();
+      renderer.render(scene, camera);
+      requestAnimationFrame(tick);
+    }
+    tick();
+
+    // ── Resize ──
+    window.addEventListener('resize', () => {
+      sizes.width = window.innerWidth;
+      sizes.height = window.innerHeight;
+      camera.aspect = sizes.width / sizes.height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(sizes.width, sizes.height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    });
+  </script>
+</body>
+</html>
