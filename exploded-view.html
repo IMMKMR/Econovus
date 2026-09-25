@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Econovus — Deconstructed View</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #ffffff; overflow: hidden; cursor: default; }
+
+    #webgl-canvas {
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh; z-index: 0;
+    }
+
+    #preloader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #ffffff;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 20px;
+      transition: opacity 0.8s ease;
+    }
+    #preloader.hide { display: none; }
+
+    .spinner {
+      width: 32px; height: 32px;
+      border: 2px solid #e5e7eb;
+      border-top-color: #a4bb12;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .preloader-pct {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 2px; color: #9ca3af;
+    }
+
+    /* Part tooltip */
+    #tooltip {
+      position: fixed; z-index: 100;
+      pointer-events: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: #ffffff;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 6px 14px;
+      border-radius: 100px;
+      opacity: 0;
+      transform: translate(-50%, -120%);
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+    }
+    #tooltip.visible { opacity: 1; }
+  </style>
+  <script type="module" crossorigin src="./assets/exploded-DtIv1Kpn.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/three.module-C2rZqWRk.js">
+  <link rel="modulepreload" crossorigin href="./assets/GLTFLoader-nVOZzDlO.js">
+  <link rel="modulepreload" crossorigin href="./assets/OrbitControls-CTjeTeUn.js">
+</head>
+<body>
+
+  <div id="preloader">
+    <div class="spinner"></div>
+    <div class="preloader-pct" id="preloader-pct">0%</div>
+  </div>
+
+  <canvas id="webgl-canvas"></canvas>
+  <div id="tooltip"></div>
+
+</body>
+</html>
