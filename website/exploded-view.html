@@ -277,17 +277,18 @@
 
           let label = "PART";
           
-          if (pY < 0.15 && pX > 0.4 && pZ > 0.4) {
+          // The Lid and Pallet are the only parts that span almost the full width AND depth
+          if (pX > 0.7 && pZ > 0.7) {
             label = partCenter.y > modelCenter.y ? "TOP LID" : "BOTTOM PALLET";
           } else if (pY > 0.25) {
-            // Wall Panels
+            // Wall Panels are tall
             if (pX > pZ) {
               label = partCenter.z > modelCenter.z ? "FRONT WALL PANEL" : "BACK WALL PANEL";
             } else {
               label = partCenter.x > modelCenter.x ? "RIGHT WALL PANEL" : "LEFT WALL PANEL";
             }
           } else if (pX > 0.25 || pZ > 0.25) {
-            // Bottom Bands
+            // Bottom Bands are short but wide
             if (pX > pZ) {
               label = partCenter.z > modelCenter.z ? "FRONT BOTTOM BAND" : "BACK BOTTOM BAND";
             } else {
