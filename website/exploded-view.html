@@ -263,18 +263,40 @@
       const modelCenter = new THREE.Vector3();
       new THREE.Box3().setFromObject(rackGroup).getCenter(modelCenter);
 
-      const partLabels = [
-        'Top Lid', 'Side Wall L', 'Side Wall R', 'Base Pallet',
-        'Front Panel', 'Rear Panel', 'Corner Post', 'Hinge Bracket',
-        'Lock Clip', 'Collar Frame', 'Support Rail', 'Cross Beam',
-        'Bottom Frame'
-      ];
-
-      let partIndex = 0;
+      // Use relative size & position to determine the correct name
       rackGroup.traverse((child) => {
         if (child.isMesh) {
           const partBox = new THREE.Box3().setFromObject(child);
           const partCenter = partBox.getCenter(new THREE.Vector3());
+          const partSize = partBox.getSize(new THREE.Vector3());
+
+          // Ratios relative to the overall model
+          const pY = partSize.y / rackSize.y;
+          const pX = partSize.x / rackSize.x;
+          const pZ = partSize.z / rackSize.z;
+
+          let label = "PART";
+          
+          if (pY < 0.15 && pX > 0.4 && pZ > 0.4) {
+            label = partCenter.y > modelCenter.y ? "TOP LID" : "BOTTOM PALLET";
+          } else if (pY > 0.25) {
+            // Wall Panels
+            if (pX > pZ) {
+              label = partCenter.z > modelCenter.z ? "FRONT WALL PANEL" : "BACK WALL PANEL";
+            } else {
+              label = partCenter.x > modelCenter.x ? "RIGHT WALL PANEL" : "LEFT WALL PANEL";
+            }
+          } else if (pX > 0.25 || pZ > 0.25) {
+            // Bottom Bands
+            if (pX > pZ) {
+              label = partCenter.z > modelCenter.z ? "FRONT BOTTOM BAND" : "BACK BOTTOM BAND";
+            } else {
+              label = partCenter.x > modelCenter.x ? "RIGHT BOTTOM BAND" : "LEFT BOTTOM BAND";
+            }
+          } else {
+            // Tiny parts
+            label = partCenter.y > modelCenter.y ? "HINGE BRACKET" : "LOCK CLIP";
+          }
 
           const dir = new THREE.Vector3().subVectors(partCenter, modelCenter);
           if (dir.length() < 0.05) {
@@ -299,9 +321,8 @@
             mesh: child,
             originalPos: child.position.clone(),
             explodeDir: dir,
-            label: partLabels[partIndex % partLabels.length],
+            label: label,
           });
-          partIndex++;
         }
       });
 
